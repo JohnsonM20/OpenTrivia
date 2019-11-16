@@ -10,6 +10,7 @@ import UIKit
 import JavaScriptCore
 import Foundation
 
+
 //do not need
 struct Question{
     
@@ -54,6 +55,7 @@ class QuestionArray: Codable, CustomStringConvertible {
 
 
 class QuestionViewController: UIViewController {
+    
     @IBOutlet var QuestionLabel: UILabel!
     @IBOutlet var Buttons: [UIButton]!
     @IBOutlet var progressBar: UIProgressView!
@@ -66,8 +68,8 @@ class QuestionViewController: UIViewController {
     var questionsAnswered = Int(0)
     var wrongAnswers = Int(0)
     //
-    //var results: Array<Any>
-    //var responseCode: Int
+    var response_code: Int = 0
+    var results: [QuestionArray] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,12 +87,13 @@ class QuestionViewController: UIViewController {
             let responseCode = result.response_code
             print("Got results: \(results[0])")
             print("Got results: \(responseCode)")
-            iterateQuestions(response_code: responseCode, results: results)
+            setDataFromCall(responseCodeFromCall: responseCode, resultsFromCall: results)
+            iterateQuestions()
         } catch {
             
         }
         
-
+/*
         Questions = [
             Question(Question: "What is the fear of getting tickled by feathers?", Answers: ["TickledByFeatherPhobia","Pteronophobia","Knetrophobia","Photinthopia"], Answer: 1),
             Question(Question: "What is a baby spider called?", Answers: ["Arachnophobian","Smelling","Movling","Spiderling"], Answer: 3),
@@ -108,10 +111,15 @@ class QuestionViewController: UIViewController {
             Question(Question: "In which state is it illegal to fish from the back of a horse?", Answers: ["Utah","Florida","Massachusetts","Every state"], Answer: 0),
             Question(Question: "How many human body parts are three letters long?", Answers: ["6","10","15","23"], Answer: 1),
             ]
+        */
         
-        
-        removeQuestions()
-        chooseQuestion()
+        //removeQuestions()
+        //chooseQuestion()
+    }
+    
+    func setDataFromCall(responseCodeFromCall: Int, resultsFromCall: [QuestionArray]){
+        response_code = responseCodeFromCall
+        results = resultsFromCall
     }
     
     func getQuestionAmount() -> Int {
@@ -130,20 +138,46 @@ class QuestionViewController: UIViewController {
         return(numRoundQuestions)
     }
     
-    func iterateQuestions(response_code: Int, results: [QuestionArray]){
-        for QNumber in 0..<getQuestionAmount(){
-            //progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
-            //QuestionLabel.text = results[QNumber].getQuestion()
+    func iterateQuestions(){
+        
+        if questionsAnswered < getQuestionAmount(){
+            progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
+            QuestionLabel.text = results[QNumber].getQuestion()
             print(results[QNumber].getQuestion())
-            //AnswerNumber = Questions[QNumber].Answer
+            AnswerNumber = 0//
+            let answers = results[QNumber].getAnswers()
             
             for i in 0..<Buttons.count{
-                Buttons[i].setTitle(Questions[QNumber].Answers[i], for: UIControl.State.normal)
+                print(i)
+                print("\(answers[i])")
+                Buttons[i].setTitle("\(answers[i])", for: UIControl.State.normal)
             }
-            
+            questionsAnswered += 1
+            resetButtons()
         }
+        var file = "rightAnswers.txt"
+        var text = String(questionsAnswered)
+
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                try text.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
+            catch {}
+        }
+        
+        file = "totalClicks.txt"
+        text = String(wrongAnswers + questionsAnswered)
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                try text.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
+            catch {}
+        }
+         
     }
-    
+    /*
     func chooseQuestion(){
         if Questions.count > 0{
             progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
@@ -186,7 +220,8 @@ class QuestionViewController: UIViewController {
         }
         
     }
-    
+     */
+    /*
     func removeQuestions(){
         
         let file = "quizData.txt"
@@ -205,7 +240,7 @@ class QuestionViewController: UIViewController {
             catch {}
         }
     }
-    
+    */
     func resetButtons(){
         for i in 0...3{
             Buttons[i].backgroundColor = UIColor.clear
@@ -216,7 +251,7 @@ class QuestionViewController: UIViewController {
         if AnswerNumber == 0{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.chooseQuestion()
+                self.iterateQuestions()
             }
         } else{
             wrongAnswers += 1
@@ -227,7 +262,7 @@ class QuestionViewController: UIViewController {
         if AnswerNumber == 1{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.chooseQuestion()
+                self.iterateQuestions()
             }
         }else{
             wrongAnswers += 1
@@ -238,7 +273,7 @@ class QuestionViewController: UIViewController {
         if AnswerNumber == 2{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.chooseQuestion()
+                self.iterateQuestions()
             }
         }else{
             wrongAnswers += 1
@@ -249,7 +284,7 @@ class QuestionViewController: UIViewController {
         if AnswerNumber == 3{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.chooseQuestion()
+                self.iterateQuestions()
             }
         }else{
             wrongAnswers += 1
