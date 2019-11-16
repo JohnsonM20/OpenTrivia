@@ -8,7 +8,9 @@
 
 import UIKit
 import JavaScriptCore
+import Foundation
 
+//do not need
 struct Question{
     
     var Question: String!
@@ -17,41 +19,78 @@ struct Question{
     
 }
 
-struct TriviaQuestion{
+class ResultArray:Codable {
+    var response_code: Int
+    var results = [QuestionArray]()
+}
+
+class QuestionArray: Codable, CustomStringConvertible {
+    var description: String {
+        //print(incorrect_answers.count)
+        return "Category: \(category ?? "None"), Type: \(questionType ?? "None"), Difficulty: \(difficulty ?? "None"), Question: \(question), Answer: \(correct_answer ), Incorrect Answers: \(incorrect_answers)"
+    }
     
-    var Category: String!
-    var numAnswers: String!
-    var Difficuty: String!
-    var Question: String!
-    var correctAnswer: String!
-    var incorrectAnswers: [String]!
+    var category: String? = ""
+    var questionType: String? = ""
+    var difficulty: String? = ""
+    var question: String = ""
+    var correct_answer: String = ""
+    var incorrect_answers = [] as [String]
+    
+    func getQuestion() -> String{
+        return (question)
+    }
+
+    func getAnswers() -> [Array<String>]{
+        var answers = [Array<String>]()
+        answers.append([correct_answer])
+        for i in 0..<incorrect_answers.count{
+            answers.append([incorrect_answers[i]])
+        }
+        return answers
+    }
     
 }
+
 
 class QuestionViewController: UIViewController {
     @IBOutlet var QuestionLabel: UILabel!
     @IBOutlet var Buttons: [UIButton]!
+    @IBOutlet var progressBar: UIProgressView!
     
-    var Questions = [Question]()
-    var QNumber = Int()
+    var Questions = [Question]() //
+    var QNumber = Int() //?
     var AnswerNumber = Int()
     var sliderValue = Int()
     var numRoundQuestions = Int()
-    @IBOutlet var progressBar: UIProgressView!
     var questionsAnswered = Int(0)
     var wrongAnswers = Int(0)
+    //
+    //var results: Array<Any>
+    //var responseCode: Int
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        //let myURL = URL(string: "https://opentdb.com/api.php?amount=10")
 
+        let urlString = String(format: "https://opentdb.com/api.php?amount=%@", String(getQuestionAmount()))
+        let url = URL(string: urlString)
+        print("URL: '\(String(describing: url))'")
         
+        do{
+            let data = try Data(contentsOf:url!)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(ResultArray.self, from:data)
+            let results = result.results
+            let responseCode = result.response_code
+            print("Got results: \(results[0])")
+            print("Got results: \(responseCode)")
+            iterateQuestions(response_code: responseCode, results: results)
+        } catch {
+            
+        }
         
-        
-        /*
+
         Questions = [
             Question(Question: "What is the fear of getting tickled by feathers?", Answers: ["TickledByFeatherPhobia","Pteronophobia","Knetrophobia","Photinthopia"], Answer: 1),
             Question(Question: "What is a baby spider called?", Answers: ["Arachnophobian","Smelling","Movling","Spiderling"], Answer: 3),
@@ -69,17 +108,46 @@ class QuestionViewController: UIViewController {
             Question(Question: "In which state is it illegal to fish from the back of a horse?", Answers: ["Utah","Florida","Massachusetts","Every state"], Answer: 0),
             Question(Question: "How many human body parts are three letters long?", Answers: ["6","10","15","23"], Answer: 1),
             ]
-        */
+        
         
         removeQuestions()
-        
         chooseQuestion()
+    }
+    
+    func getQuestionAmount() -> Int {
+        let file = "quizData.txt"
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                let selectedQuestions = try String(contentsOf: fileURL, encoding: .utf8)
+                numRoundQuestions = Int(selectedQuestions) ?? 10
+                print(numRoundQuestions)
+            }
+            catch {
+                numRoundQuestions = 10
+            }
+        }
+        return(numRoundQuestions)
+    }
+    
+    func iterateQuestions(response_code: Int, results: [QuestionArray]){
+        for QNumber in 0..<getQuestionAmount(){
+            //progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
+            //QuestionLabel.text = results[QNumber].getQuestion()
+            print(results[QNumber].getQuestion())
+            //AnswerNumber = Questions[QNumber].Answer
+            
+            for i in 0..<Buttons.count{
+                Buttons[i].setTitle(Questions[QNumber].Answers[i], for: UIControl.State.normal)
+            }
+            
+        }
     }
     
     func chooseQuestion(){
         if Questions.count > 0{
             progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
-            print(questionsAnswered/numRoundQuestions)
+            //print(questionsAnswered/numRoundQuestions)
             QNumber = Int(arc4random()) % Questions.count
             QuestionLabel.text = Questions[QNumber].Question
             AnswerNumber = Questions[QNumber].Answer
@@ -128,6 +196,7 @@ class QuestionViewController: UIViewController {
                 let selectedQuestions = try String(contentsOf: fileURL, encoding: .utf8)
                 numRoundQuestions = Int(selectedQuestions) ?? 10
                 print(Questions.count - (Int(selectedQuestions) ?? 10))
+                //print(numRoundQuestions)
                 while Questions.count > Int(selectedQuestions) ?? 10 {
                     QNumber = Int(arc4random()) % Questions.count
                     Questions.remove(at: QNumber)

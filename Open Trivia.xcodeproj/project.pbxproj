@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		3405604B233A7345001323D1 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		34130A112344D263007B8FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		34365B232331369700AA462A /* API Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "API Trivia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34365B232331369700AA462A /* Open Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open Trivia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34365B262331369700AA462A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34365B282331369700AA462A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		34365B2B2331369700AA462A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		34365B242331369700AA462A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				34365B232331369700AA462A /* API Trivia.app */,
+				34365B232331369700AA462A /* Open Trivia.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,7 +90,7 @@
 			);
 			name = "Open Trivia";
 			productName = FirstQuizGame;
-			productReference = 34365B232331369700AA462A /* API Trivia.app */;
+			productReference = 34365B232331369700AA462A /* Open Trivia.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -296,13 +296,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56YK987R2L;
-				INFOPLIST_FILE = FirstQuizGame/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Open Trivia/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Matthew-Johnson.FirstQuizGame";
-				PRODUCT_NAME = "API Trivia";
+				PRODUCT_NAME = "Open Trivia";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -314,13 +314,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56YK987R2L;
-				INFOPLIST_FILE = FirstQuizGame/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Open Trivia/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Matthew-Johnson.FirstQuizGame";
-				PRODUCT_NAME = "API Trivia";
+				PRODUCT_NAME = "Open Trivia";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
