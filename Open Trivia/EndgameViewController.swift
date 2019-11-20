@@ -39,11 +39,10 @@ class EndgameViewController: UIViewController {
         print(rightAnswers)
         print(totalClicks)
         //Float(round(1000*x)/1000)
-        GuessLabel.text = ("You guessed with a \(round(Float(rightAnswers)*100.0/Float(totalClicks))*1000/1000) % accuracy.")
+        GuessLabel.text = ("You guessed with a \(round(Float(rightAnswers)*100/Float(totalClicks)))% accuracy.")
         
     }
     
-
     /*
     // MARK: - Navigation
 

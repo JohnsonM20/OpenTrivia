@@ -9,9 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var numberOfQuestions = Int()
+    //var numberOfQuestions = Int()
     
     override func viewDidLoad() {
+        print("hi")
         super.viewDidLoad()
     }
 
