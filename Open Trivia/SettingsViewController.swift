@@ -8,22 +8,63 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class CategoryTypes:Codable
+{
+    var trivia_categories = [Categories]()
+    
+}
+
+class Categories:Codable, CustomStringConvertible
+{
+    var description: String {
+        return "Category: \(id)"
+    }
+    
+    var id = Int()
+    var name = String()
+}
+
+class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     @IBOutlet var TotalQNumber: UILabel!
-    @IBOutlet var SelectedQNumber: UILabel!
+    @IBOutlet var NumberLabel: UILabel!
     @IBOutlet var slider: UISlider!
-    var sliderQuestionPreferenceValue = Int()
+    @IBOutlet var QuestionType: UIPickerView!
+    var results: [Categories] = []
+    var currentQuestionsAsked = Int()
+    var currentCategory = 9
 
     override func viewDidLoad() {
         super.viewDidLoad()
         slider.value = Float(getSliderValue())
-        SelectedQNumber.text = String(Int(slider.value))
+        NumberLabel.text = String(Int(slider.value)*5)
+        
+        self.QuestionType.dataSource = self
+        self.QuestionType.delegate = self
+        
+        
+        
+        
+        let urlString = String(format: "https://opentdb.com/api_category.php")
+        let url = URL(string: urlString)
+        
+        do{
+            let data = try Data(contentsOf:url!)//, using: .utf8
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(CategoryTypes.self, from:data)
+            results = result.trivia_categories
+            print(results.count)
+        } catch{
+            print("f")
+        }
         
     }
     
+    
     @IBAction func ChangeSlider(_ sender: Any) {
-        SelectedQNumber.text = String(Int(slider.value))
-        sliderQuestionPreferenceValue = Int(slider.value)
+        NumberLabel.text = String(Int(slider.value)*5)
+        currentQuestionsAsked = Int(slider.value)
+        
     }
     
     func getSliderValue() -> Int{
@@ -31,26 +72,61 @@ class SettingsViewController: UIViewController {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             do {
-                sliderQuestionPreferenceValue = try (Int(String(contentsOf: fileURL, encoding: .utf8)) ?? 10)
+                currentQuestionsAsked = try (Int(String(contentsOf: fileURL, encoding: .utf8)) ?? 10)
             }
             catch {}
-            
         }
-        return sliderQuestionPreferenceValue
+        
+        return currentQuestionsAsked
     }
     
     @IBAction func saveSettings(_ sender: Any) {
-        print("Hello")
-        
-        
-        
         let file = "quizData.txt"
-        let text = String(sliderQuestionPreferenceValue)
+        let text = String(currentQuestionsAsked)
 
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             do {
                 try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                
+            }
+            catch {}
+        }
+
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return results.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0{
+            //return ("All Questions")
+            return results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
+            
+        } else {
+            return results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
+        }
+    }
+    
+    func getQuestionID() -> Int {
+        return currentCategory
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
+        currentCategory = results[row].id
+        print(currentCategory)
+        
+        let file = "Category.txt"
+        let text = String(currentCategory)
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                
             }
             catch {}
         }
@@ -59,11 +135,5 @@ class SettingsViewController: UIViewController {
         
         
     }
-    
-    func getSelectedQuestionAmount() -> Int{
-        
-        return sliderQuestionPreferenceValue
-    }
-
 
 }

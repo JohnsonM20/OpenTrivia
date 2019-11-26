@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     //var numberOfQuestions = Int()
     
     override func viewDidLoad() {
-        print("hi")
+        //print("hi")
         super.viewDidLoad()
     }
 

@@ -10,14 +10,14 @@ import UIKit
 import JavaScriptCore
 import Foundation
 
-class ResultArray:Codable {
+class ResultArray:Codable
+{
     var response_code: Int
     var results = [QuestionArray]()
 }
 
 class QuestionArray: Codable, CustomStringConvertible {
     var description: String {
-        //print(incorrect_answers.count)
         return "Category: \(category ?? "None"), Type: \(type), Difficulty: \(difficulty ?? "None"), Question: \(question), Answer: \(correct_answer ), Incorrect Answers: \(incorrect_answers)"
     }
     
@@ -75,25 +75,38 @@ class QuestionViewController: UIViewController {
         for i in 0...3{
             Buttons[i].layer.cornerRadius = 20
         }
+        
+        
+        let file = "Category.txt"
+        var category = String()
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                category = try String(contentsOf: fileURL, encoding: .utf8)
+        } catch {}
+        }
 
-        let urlString = String(format: "https://opentdb.com/api.php?amount=%@", String(getQuestionAmount()))
+        print(getQuestionAmount())
+        print(category)
+        //let urlString = String(format:"https://opentdb.com/api.php?amount=%@\(getQuestionAmount())&category=%@\(category)")
+        let urlString = String(format:"https://opentdb.com/api.php?amount=\(getQuestionAmount())&category=\(category)")
+        //let urlString = String(format:"https://opentdb.com/api.php?amount=10&category=31")
+        
         let url = URL(string: urlString)
         print("URL: '\(String(describing: url))'")
         
         do{
-            let data = try Data(contentsOf:url!)
+            let data = try Data(contentsOf:url!)//, using: .utf8
             let decoder = JSONDecoder()
+            //decoder.keyDecodingStrategy = .useDefaultKeys
             let result = try decoder.decode(ResultArray.self, from:data)
             let results = result.results
             let responseCode = result.response_code
-            print("Got results: \(results[0])")
-            print("Got results: \(responseCode)")
+            //print("Got results: \(results[0])")
+            //print("Got results: \(responseCode)")
             setDataFromCall(responseCodeFromCall: responseCode, resultsFromCall: results)
             iterateQuestions()
-        } catch {
-            
-        }
-        
+        } catch {}
     }
     
     func setDataFromCall(responseCodeFromCall: Int, resultsFromCall: [QuestionArray]){
@@ -121,8 +134,12 @@ class QuestionViewController: UIViewController {
         resetButtons()
         if questionsAnswered < getQuestionAmount(){
             progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
-            //QuestionLabel.text = results[questionsAnswered].getQuestion()
-            QuestionLabel.text = String(cString: results[questionsAnswered].getQuestion(), encoding: .utf8)!
+            
+           
+            
+            
+            
+            QuestionLabel.text = results[questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é")
             
             
             print(results[questionsAnswered].getQuestion())
@@ -136,7 +153,9 @@ class QuestionViewController: UIViewController {
                     print(i)
                     print(String("\(answers.0[i])"))
                     //Buttons[i].setTitle("\(answers.0[i])".removingPercentEncoding, for: UIControl.State.normal)
-                    Buttons[i].setTitle("\(answers.0[i][0])", for: UIControl.State.normal)
+                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&ecirc;", with:"ê").replacingOccurrences(of:"&auml;", with:"ä").replacingOccurrences(of:"&ouml;", with:"ö"), for: UIControl.State.normal)
+                    
+                    
                 }
             } else {
                 for i in 0...1{
@@ -146,7 +165,7 @@ class QuestionViewController: UIViewController {
                     //let string = NSString(string: "\(answers.0[i])").removingPercentEncoding!
                     //Buttons[i].setTitle(string)
                     //let blub = "\(answers.0[i])".removingPercentEncoding( withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    Buttons[i].setTitle("\(answers.0[i][0])", for: UIControl.State.normal)
+                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'"), for: UIControl.State.normal)
                 }
                 
                 for i in 2...3{
@@ -243,3 +262,4 @@ class QuestionViewController: UIViewController {
         }
     }
 }
+
