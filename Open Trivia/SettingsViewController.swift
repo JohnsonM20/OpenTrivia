@@ -36,12 +36,16 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let Settings = SettingsViewController()
+
+        
         slider.value = Float(getSliderValue())
         NumberLabel.text = String(Int(slider.value)*5)
-        
-        self.QuestionType.dataSource = self
-        self.QuestionType.delegate = self
-        
+        //
+        QuestionType.dataSource = self
+        QuestionType.delegate = self
+        //
         
         
         
@@ -68,6 +72,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func getSliderValue() -> Int{
+        print("gehiruaiegurhllai")
         let file = "quizData.txt"
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)

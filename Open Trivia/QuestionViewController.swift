@@ -58,12 +58,12 @@ class QuestionViewController: UIViewController {
     @IBOutlet var QuestionLabel: UILabel!
     @IBOutlet var Buttons: [UIButton]!
     @IBOutlet var progressBar: UIProgressView!
-    
+    @IBOutlet var questionTypeLabel: UILabel!
     //var QNumber = Int() //?
     var AnswerNumber = Int()
     var sliderValue = Int()
     var numRoundQuestions = Int()
-    var questionsAnswered = Int(0)
+    var questionsAnswered = Int(1)
     var wrongAnswers = Int(0)
     //
     var response_code: Int = 0
@@ -72,24 +72,13 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //questionTypeLabel.text = SettingsViewController.getQuestionID()
+        
         for i in 0...3{
             Buttons[i].layer.cornerRadius = 20
         }
-        
-        
-        let file = "Category.txt"
-        var category = String()
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                category = try String(contentsOf: fileURL, encoding: .utf8)
-        } catch {}
-        }
 
-        print(getQuestionAmount())
-        print(category)
-        //let urlString = String(format:"https://opentdb.com/api.php?amount=%@\(getQuestionAmount())&category=%@\(category)")
-        let urlString = String(format:"https://opentdb.com/api.php?amount=\(getQuestionAmount())&category=\(category)")
+        let urlString = String(format:"https://opentdb.com/api.php?amount=\(getQuestionAmount())&category=\(getCategory())")
         //let urlString = String(format:"https://opentdb.com/api.php?amount=10&category=31")
         
         let url = URL(string: urlString)
@@ -109,6 +98,18 @@ class QuestionViewController: UIViewController {
         } catch {}
     }
     
+    func getCategory() -> String{
+        let file = "Category.txt"
+        var category = String()
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                category = try String(contentsOf: fileURL, encoding: .utf8)
+            } catch {}
+        }
+        return category
+    }
+    
     func setDataFromCall(responseCodeFromCall: Int, resultsFromCall: [QuestionArray]){
         response_code = responseCodeFromCall
         results = resultsFromCall
@@ -121,12 +122,14 @@ class QuestionViewController: UIViewController {
             do {
                 let selectedQuestions = try String(contentsOf: fileURL, encoding: .utf8)
                 numRoundQuestions = Int(selectedQuestions) ?? 10
+                numRoundQuestions = numRoundQuestions*5 // delete 5 later
                 print(numRoundQuestions)
             }
             catch {
                 numRoundQuestions = 10
             }
         }
+        print("ROUND QUESTIONS")
         return(numRoundQuestions)
     }
     
@@ -139,7 +142,7 @@ class QuestionViewController: UIViewController {
             
             
             
-            QuestionLabel.text = results[questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é")
+            QuestionLabel.text = results[questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&amp;", with:"&")
             
             
             print(results[questionsAnswered].getQuestion())
@@ -153,7 +156,7 @@ class QuestionViewController: UIViewController {
                     print(i)
                     print(String("\(answers.0[i])"))
                     //Buttons[i].setTitle("\(answers.0[i])".removingPercentEncoding, for: UIControl.State.normal)
-                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&ecirc;", with:"ê").replacingOccurrences(of:"&auml;", with:"ä").replacingOccurrences(of:"&ouml;", with:"ö"), for: UIControl.State.normal)
+                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&ecirc;", with:"ê").replacingOccurrences(of:"&amp;", with:"&").replacingOccurrences(of:"&auml;", with:"ä").replacingOccurrences(of:"&ouml;", with:"ö"), for: UIControl.State.normal)
                     
                     
                 }
@@ -185,7 +188,6 @@ class QuestionViewController: UIViewController {
         }
         var file = "rightAnswers.txt"
         var text = String(questionsAnswered)
-
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             do {
