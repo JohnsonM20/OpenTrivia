@@ -55,213 +55,176 @@ class QuestionArray: Codable, CustomStringConvertible {
 
 class QuestionViewController: UIViewController {
     
-    @IBOutlet var QuestionLabel: UILabel!
-    @IBOutlet var Buttons: [UIButton]!
+    @IBOutlet var questionAskedLabel: UILabel!
+    @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet var progressBar: UIProgressView!
-    @IBOutlet var questionTypeLabel: UILabel!
-    //var QNumber = Int() //?
-    var AnswerNumber = Int()
-    var sliderValue = Int()
+    var correctAnswerNumber = Int()
+    var sliderPercentDoneValue = Int()
     var numRoundQuestions = Int()
-    var questionsAnswered = Int(1)
-    var wrongAnswers = Int(0)
-    //
+    static var questionsAnswered = Int()
+    static var wrongAnswers = Int()
     var response_code: Int = 0
-    var results: [QuestionArray] = []
+    var resultsFromAPI: [QuestionArray] = []
+    
+    //for each round
+    var b1Pressed = false
+    var b2Pressed = false
+    var b3Pressed = false
+    var b4Pressed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //questionTypeLabel.text = SettingsViewController.getQuestionID()
-        
+        //make buttons rounded
         for i in 0...3{
-            Buttons[i].layer.cornerRadius = 20
+            answerButtons[i].layer.cornerRadius = 20
         }
 
         let urlString = String(format:"https://opentdb.com/api.php?amount=\(getQuestionAmount())&category=\(getCategory())")
-        //let urlString = String(format:"https://opentdb.com/api.php?amount=10&category=31")
         
         let url = URL(string: urlString)
         print("URL: '\(String(describing: url))'")
         
         do{
-            let data = try Data(contentsOf:url!)//, using: .utf8
+            let JSONdata = try Data(contentsOf:url!)//, using: .utf8
             let decoder = JSONDecoder()
-            //decoder.keyDecodingStrategy = .useDefaultKeys
-            let result = try decoder.decode(ResultArray.self, from:data)
-            let results = result.results
-            let responseCode = result.response_code
-            //print("Got results: \(results[0])")
-            //print("Got results: \(responseCode)")
+            let decodedJSON = try decoder.decode(ResultArray.self, from:JSONdata)
+            let results = decodedJSON.results
+            let responseCode = decodedJSON.response_code
             setDataFromCall(responseCodeFromCall: responseCode, resultsFromCall: results)
-            iterateQuestions()
+            askNextQuestion()
         } catch {}
     }
     
     func getCategory() -> String{
-        let file = "Category.txt"
-        var category = String()
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                category = try String(contentsOf: fileURL, encoding: .utf8)
-            } catch {}
-        }
-        return category
+        return String(SettingsSinglePlayerViewController.getCurrentTriviaQuestionID())
+    }
+    
+    func getQuestionAmount() -> Int {
+        //sets progress bar total questions asked
+        numRoundQuestions = SettingsSinglePlayerViewController.getQuestionAmountAskedSliderValue()
+        return SettingsSinglePlayerViewController.getQuestionAmountAskedSliderValue()
     }
     
     func setDataFromCall(responseCodeFromCall: Int, resultsFromCall: [QuestionArray]){
         response_code = responseCodeFromCall
-        results = resultsFromCall
+        resultsFromAPI = resultsFromCall
     }
     
-    func getQuestionAmount() -> Int {
-        let file = "quizData.txt"
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                let selectedQuestions = try String(contentsOf: fileURL, encoding: .utf8)
-                numRoundQuestions = Int(selectedQuestions) ?? 10
-                numRoundQuestions = numRoundQuestions*5 // delete 5 later
-                print("ROUND QUESTIONS")
-                print(numRoundQuestions)
-            }
-            catch {
-                numRoundQuestions = 10
-            }
-        }
-        print("ROUND QUESTIONS")
-        return(10)
-    }
-    
-    func iterateQuestions(){
+    func askNextQuestion(){
         resetButtons()
-        if questionsAnswered < getQuestionAmount(){
-            progressBar.progress = Float(questionsAnswered)/Float(numRoundQuestions)
+        if QuestionViewController.questionsAnswered < getQuestionAmount(){
+            progressBar.progress = Float(QuestionViewController.questionsAnswered)/Float(numRoundQuestions)
             
-           
+            questionAskedLabel.text = resultsFromAPI[QuestionViewController.questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&amp;", with:"&")
             
+            print(resultsFromAPI[QuestionViewController.questionsAnswered].getQuestion())
+            let answers = resultsFromAPI[QuestionViewController.questionsAnswered].getAnswers()
             
+            print("Question Type: ", resultsFromAPI[QuestionViewController.questionsAnswered].getQuestionType())
             
-            QuestionLabel.text = results[questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&amp;", with:"&")
-            
-            
-            print(results[questionsAnswered].getQuestion())
-            let answers = results[questionsAnswered].getAnswers()
-            
-            print("Question Type: ", results[questionsAnswered].getQuestionType())
-            
-            if results[questionsAnswered].getQuestionType() == "multiple"{
-                
-                for i in 0..<Buttons.count{
+            if resultsFromAPI[QuestionViewController.questionsAnswered].getQuestionType() == "multiple"{
+                for i in 0..<answerButtons.count{
                     print(i)
                     print(String("\(answers.0[i])"))
-                    //Buttons[i].setTitle("\(answers.0[i])".removingPercentEncoding, for: UIControl.State.normal)
-                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&ecirc;", with:"ê").replacingOccurrences(of:"&amp;", with:"&").replacingOccurrences(of:"&auml;", with:"ä").replacingOccurrences(of:"&ouml;", with:"ö"), for: UIControl.State.normal)
-                    
-                    
+                    answerButtons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&ecirc;", with:"ê").replacingOccurrences(of:"&amp;", with:"&").replacingOccurrences(of:"&auml;", with:"ä").replacingOccurrences(of:"&ouml;", with:"ö"), for: UIControl.State.normal)
                 }
             } else {
                 for i in 0...1{
                     print(i)
                     print("\(answers.0[i])")
-                    //let percentString = "hello%20world"
-                    //let string = NSString(string: "\(answers.0[i])").removingPercentEncoding!
-                    //Buttons[i].setTitle(string)
-                    //let blub = "\(answers.0[i])".removingPercentEncoding( withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    Buttons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'"), for: UIControl.State.normal)
+                    answerButtons[i].setTitle("\(answers.0[i][0])".replacingOccurrences(of: "&quot;", with: "'"), for: UIControl.State.normal)
                 }
                 
                 for i in 2...3{
-                    Buttons[i].isEnabled = false
-                    Buttons[i].setTitle("", for: UIControl.State.normal)
-                    Buttons[i].backgroundColor = UIColor.clear
+                    answerButtons[i].isEnabled = false
+                    answerButtons[i].setTitle("", for: UIControl.State.normal)
+                    answerButtons[i].backgroundColor = UIColor.clear
                 }
             }
             print(answers.0.last!)
-            AnswerNumber = answers.1
-             
-            questionsAnswered += 1
+            correctAnswerNumber = answers.1
+            QuestionViewController.questionsAnswered += 1
             
         } else {
-            let controller = self.storyboard!.instantiateViewController(withIdentifier: "Endgame")
-            self.present(controller, animated: true, completion: nil)
-        }
-        var file = "rightAnswers.txt"
-        var text = String(questionsAnswered)
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                try text.write(to: fileURL, atomically: false, encoding: .utf8)
-            }
-            catch {}
-        }
-        
-        file = "totalClicks.txt"
-        text = String(wrongAnswers + questionsAnswered)
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                try text.write(to: fileURL, atomically: false, encoding: .utf8)
-            }
-            catch {}
+            let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "Endgame")
+            self.present(storyboardController, animated: true, completion: nil)
         }
          
     }
+    
+    static func getRightAnswersAndQuestionsAnswered() -> (Int, Int){
+        return (questionsAnswered, questionsAnswered+wrongAnswers)
+
+    }
+    
+    static func resetVarsForNextRound(){
+        questionsAnswered=0
+        wrongAnswers=0
+    }
  
     func resetButtons(){
+        b1Pressed = false
+        b2Pressed = false
+        b3Pressed = false
+        b4Pressed = false
+        
         for i in 0...3{
             if #available(iOS 13.0, *) {
-                Buttons[i].backgroundColor = UIColor.tertiarySystemFill
+                answerButtons[i].backgroundColor = UIColor.tertiarySystemFill
             } else {
-                Buttons[i].backgroundColor = UIColor.gray
+                answerButtons[i].backgroundColor = UIColor.gray
             }
-            Buttons[i].isEnabled = true
+            answerButtons[i].isEnabled = true
         }
     }
     
     @IBAction func Button1(_ sender: UIButton) {
-        if AnswerNumber == 0{
+        if correctAnswerNumber == 0{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.45)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.iterateQuestions()
+                self.askNextQuestion()
             }
-        } else{
-            wrongAnswers += 1
+        } else if b1Pressed == false{
+            QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.45)
+            b1Pressed = true
         }
     }
     @IBAction func Button2(_ sender: UIButton) {
-        if AnswerNumber == 1{
+        if correctAnswerNumber == 1{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.45)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.iterateQuestions()
+                self.askNextQuestion()
             }
-        }else{
-            wrongAnswers += 1
+        }else if b2Pressed == false{
+            QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.45)
+            b2Pressed = true
         }
     }
     @IBAction func Button3(_ sender: UIButton) {
-        if AnswerNumber == 2{
+        if correctAnswerNumber == 2{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.45)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.iterateQuestions()
+                self.askNextQuestion()
             }
-        }else{
-            wrongAnswers += 1
+        }else if b3Pressed == false{
+            QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.45)
+            b3Pressed = true
         }
     }
     @IBAction func Button4(_ sender: UIButton) {
-        if AnswerNumber == 3{
+        if correctAnswerNumber == 3{
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.45)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.iterateQuestions()
+                self.askNextQuestion()
             }
-        }else{
-            wrongAnswers += 1
+        }else if b4Pressed == false{
+            QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.45)
+            b4Pressed = true
         }
     }
 }

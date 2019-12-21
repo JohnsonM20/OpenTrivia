@@ -16,30 +16,13 @@ class EndgameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        var file = "rightAnswers.txt"
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                let userData = try String(contentsOf: fileURL, encoding: .utf8)
-                rightAnswers = Int(userData) ?? 0
-            }
-            catch {}
-        }
-        
-        file = "totalClicks.txt"
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(file)
-            do {
-                let userData = try String(contentsOf: fileURL, encoding: .utf8)
-                totalClicks = Int(userData) ?? 0
-            }
-            catch {}
-        }
+        let questionData = QuestionViewController.getRightAnswersAndQuestionsAnswered()
+        QuestionViewController.resetVarsForNextRound()
+        rightAnswers = questionData.0
+        totalClicks = questionData.1
         print(rightAnswers)
         print(totalClicks)
-        //Float(round(1000*x)/1000)
-        GuessLabel.text = ("You guessed with a \(round(Float(rightAnswers)*100/Float(totalClicks)))% accuracy.")
+        GuessLabel.text = ("You guessed with a \(Int(round(Float(rightAnswers)*100/Float(totalClicks))))% accuracy.")
         
     }
     

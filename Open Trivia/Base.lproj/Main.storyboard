@@ -133,7 +133,8 @@
                         <subviews>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z4t-Ri-WeU">
                                 <rect key="frame" x="26" y="430" width="323" height="2"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FinalGradient" translatesAutoresizingMaskIntoConstraints="NO" id="Vzd-X8-FG6">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -260,13 +261,13 @@
                         <viewLayoutGuide key="safeArea" id="6rj-xj-eyl"/>
                     </view>
                     <connections>
-                        <outlet property="QuestionLabel" destination="yYl-rb-CoD" id="RvQ-4T-n5q"/>
                         <outlet property="progressBar" destination="Z4t-Ri-WeU" id="rR2-ri-4ZV"/>
-                        <outletCollection property="QuestionLabel" destination="yYl-rb-CoD" collectionClass="NSMutableArray" id="Y4a-Ee-714"/>
-                        <outletCollection property="Buttons" destination="fBs-fj-wbg" collectionClass="NSMutableArray" id="TNp-Dw-7bq"/>
-                        <outletCollection property="Buttons" destination="6CK-02-YIs" collectionClass="NSMutableArray" id="Fqv-jE-hcA"/>
-                        <outletCollection property="Buttons" destination="u0y-lf-B3L" collectionClass="NSMutableArray" id="N4u-Kb-pYs"/>
-                        <outletCollection property="Buttons" destination="nYe-NQ-V12" collectionClass="NSMutableArray" id="2TS-Jx-RCg"/>
+                        <outlet property="questionAskedLabel" destination="yYl-rb-CoD" id="RvQ-4T-n5q"/>
+                        <outletCollection property="questionAskedLabel" destination="yYl-rb-CoD" collectionClass="NSMutableArray" id="Y4a-Ee-714"/>
+                        <outletCollection property="answerButtons" destination="fBs-fj-wbg" collectionClass="NSMutableArray" id="TNp-Dw-7bq"/>
+                        <outletCollection property="answerButtons" destination="6CK-02-YIs" collectionClass="NSMutableArray" id="Fqv-jE-hcA"/>
+                        <outletCollection property="answerButtons" destination="u0y-lf-B3L" collectionClass="NSMutableArray" id="N4u-Kb-pYs"/>
+                        <outletCollection property="answerButtons" destination="nYe-NQ-V12" collectionClass="NSMutableArray" id="2TS-Jx-RCg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ihV-C2-Hfn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -344,10 +345,10 @@
             </objects>
             <point key="canvasLocation" x="1704.8" y="135.96059113300493"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings Single Player View Controller-->
         <scene sceneID="qSr-ye-JKq">
             <objects>
-                <viewController storyboardIdentifier="Settings" modalPresentationStyle="fullScreen" id="c9p-Eb-mKN" customClass="SettingsViewController" customModule="Open_Trivia" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Settings" modalPresentationStyle="fullScreen" id="c9p-Eb-mKN" customClass="SettingsSinglePlayerViewController" customModule="Open_Trivia" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yVo-5O-sAT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -361,7 +362,7 @@
                                 <rect key="frame" x="48" y="316" width="279" height="31"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="ChangeSlider:" destination="c9p-Eb-mKN" eventType="valueChanged" id="2KA-Fd-2Wc"/>
+                                    <action selector="ChangeQuestionNumberSliderActively:" destination="c9p-Eb-mKN" eventType="valueChanged" id="jY4-pO-5iO"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhe-I9-9G5">
@@ -381,8 +382,8 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="saveSettings:" destination="c9p-Eb-mKN" eventType="touchUpInside" id="yy7-4k-HXv"/>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" id="kEn-hN-TRe"/>
+                                    <action selector="saveButtonPushed:" destination="c9p-Eb-mKN" eventType="touchUpInside" id="O4w-nv-MZ2"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="QTe-3Y-BfI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SelectedQNumber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmK-t1-4Xg">
@@ -441,10 +442,10 @@
                         <viewLayoutGuide key="safeArea" id="cve-X6-zlu"/>
                     </view>
                     <connections>
-                        <outlet property="NumberLabel" destination="wmK-t1-4Xg" id="Q7S-il-pub"/>
-                        <outlet property="QuestionType" destination="MZ3-Km-RhS" id="ZRu-Uf-JkA"/>
-                        <outlet property="TotalQNumber" destination="Xhe-I9-9G5" id="6Dc-6l-6zr"/>
-                        <outlet property="slider" destination="EXe-SY-AO4" id="rxb-fj-FEh"/>
+                        <outlet property="currentSelectedQuestionAmount" destination="wmK-t1-4Xg" id="L3N-jj-1Jn"/>
+                        <outlet property="maximumAllowedQuestions" destination="Xhe-I9-9G5" id="ubp-92-uqT"/>
+                        <outlet property="questionNumberAskedSlider" destination="EXe-SY-AO4" id="7pK-Ox-Rc3"/>
+                        <outlet property="questionTypePicker" destination="MZ3-Km-RhS" id="cX1-f4-KDG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Yx-BZ-PSc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -460,7 +461,7 @@
         <image name="wrench.fill" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kEn-hN-TRe"/>
+        <segue reference="QTe-3Y-BfI"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
