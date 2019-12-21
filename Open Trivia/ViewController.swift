@@ -14,6 +14,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         //print("hi")
         super.viewDidLoad()
+        
+        //let Settings = SettingsViewController(nibName: "Settings", bundle: nil)
+        //let Settings = self.storyboard!.instantiateViewController(withIdentifier: "Settings")
+        //let Settings = SettingsViewController(nibName: "Settings", bundle: nil)
+        //let Settings = SettingsViewController()
+        SettingsViewController.getCategories()
     }
 
 }

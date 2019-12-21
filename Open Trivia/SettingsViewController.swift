@@ -30,14 +30,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet var NumberLabel: UILabel!
     @IBOutlet var slider: UISlider!
     @IBOutlet var QuestionType: UIPickerView!
-    var results: [Categories] = []
+    static var results: [Categories] = []
     var currentQuestionsAsked = Int()
     var currentCategory = 9
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let Settings = SettingsViewController()
+        //let Settings = SettingsViewController()
+
 
         
         slider.value = Float(getSliderValue())
@@ -46,8 +47,13 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         QuestionType.dataSource = self
         QuestionType.delegate = self
         //
+        //getCategories()
         
         
+        
+    }
+    
+    static func getCategories(){
         
         let urlString = String(format: "https://opentdb.com/api_category.php")
         let url = URL(string: urlString)
@@ -61,7 +67,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         } catch{
             print("f")
         }
-        
     }
     
     
@@ -105,15 +110,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return results.count
+        return SettingsViewController.results.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0{
             //return ("All Questions")
-            return results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
+            return SettingsViewController.results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
             
         } else {
-            return results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
+            return SettingsViewController.results[row].name.replacingOccurrences(of: "Entertainment: ", with: "").replacingOccurrences(of: "Science: ", with: "")
         }
     }
     
@@ -122,7 +127,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        currentCategory = results[row].id
+        currentCategory = SettingsViewController.results[row].id
         print(currentCategory)
         
         let file = "Category.txt"

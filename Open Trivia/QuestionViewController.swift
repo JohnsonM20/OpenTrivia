@@ -123,6 +123,7 @@ class QuestionViewController: UIViewController {
                 let selectedQuestions = try String(contentsOf: fileURL, encoding: .utf8)
                 numRoundQuestions = Int(selectedQuestions) ?? 10
                 numRoundQuestions = numRoundQuestions*5 // delete 5 later
+                print("ROUND QUESTIONS")
                 print(numRoundQuestions)
             }
             catch {
@@ -130,7 +131,7 @@ class QuestionViewController: UIViewController {
             }
         }
         print("ROUND QUESTIONS")
-        return(numRoundQuestions)
+        return(10)
     }
     
     func iterateQuestions(){
