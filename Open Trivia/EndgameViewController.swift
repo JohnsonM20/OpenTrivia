@@ -12,17 +12,25 @@ class EndgameViewController: UIViewController {
     var rightAnswers = Int(1)
     var totalClicks = Int(1)
     @IBOutlet var GuessLabel: UILabel!
+    var currentGameMode = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentGameMode = SettingsViewController.getCurrentGameMode()
         let questionData = QuestionViewController.getRightAnswersAndQuestionsAnswered()
         QuestionViewController.resetVarsForNextRound()
         rightAnswers = questionData.0
         totalClicks = questionData.1
-        print(rightAnswers)
-        print(totalClicks)
-        GuessLabel.text = ("You guessed with a \(Int(round(Float(rightAnswers)*100/Float(totalClicks))))% accuracy.")
+        //print(rightAnswers)
+        //print(totalClicks)
+        
+        if currentGameMode == 0{
+            GuessLabel.text = ("You guessed with \(Int(round(Float(rightAnswers)*100/Float(totalClicks))))% accuracy.")
+        } else if currentGameMode == 1{
+            GuessLabel.text = ("You answered a total of \(rightAnswers) questions correct.")
+        }
+        
         
     }
     

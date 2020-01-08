@@ -14,9 +14,18 @@ class ViewController: UIViewController {
 
         super.viewDidLoad()
         
-        SettingsSinglePlayerViewController.getTriviaCategoriesFromAPI()
+        SettingsViewController.getTriviaCategoriesFromAPI()
         
     }
-
+    
+    @IBAction func FreePlay(_ sender: Any) {
+        SettingsViewController.setCurrentGameMode(GameMode: 0)
+    }
+    
+    @IBAction func Timed(_ sender: Any) {
+        SettingsViewController.setCurrentGameMode(GameMode: 1)
+    }
+    
+    
 }
 
