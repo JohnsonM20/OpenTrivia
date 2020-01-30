@@ -10,13 +10,31 @@ import UIKit
 
 class GameSettingsViewController: UIViewController {
 
+    @IBOutlet var username: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        if let stringOne = defaults.string(forKey: defaultsKeys.keyOne) {
+            username.text = stringOne
+        }
+        /*
+        if let stringTwo = defaults.string(forKey: defaultsKeys.keyTwo) {
+            print(stringTwo) // Another String Value
+        }
+         */
 
         // Do any additional setup after loading the view.
     }
     
 
+    @IBAction func changeUsername(_ sender: Any) {
+        print(username.text)
+        let defaults = UserDefaults.standard
+        defaults.set(username.text, forKey: defaultsKeys.keyOne)
+        defaults.set("Another String Value", forKey: defaultsKeys.keyTwo)
+    }
     /*
     // MARK: - Navigation
 
@@ -27,4 +45,9 @@ class GameSettingsViewController: UIViewController {
     }
     */
 
+}
+
+struct defaultsKeys {
+    static let keyOne = "firstStringKey"
+    static let keyTwo = "secondStringKey"
 }

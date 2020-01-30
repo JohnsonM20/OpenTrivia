@@ -58,11 +58,11 @@ class QuestionViewController: UIViewController {
     @IBOutlet var questionAskedLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet var progressBar: UIProgressView!
-    var correctAnswerNumber = Int()
+    var correctAnswerNumber = Int(0)
     var sliderPercentDoneValue = Int()
     var numRoundQuestions = Int()
-    static var questionsAnswered = Int()
-    static var wrongAnswers = Int()
+    static var questionsAnswered = Int(0)
+    static var wrongAnswers = Int(0)
     var response_code: Int = 0
     var resultsFromAPI: [QuestionArray] = []
     static var currentGameMode = 0 // 0=FreePlay,1=Timed,2=Mutiplayer
@@ -91,11 +91,11 @@ class QuestionViewController: UIViewController {
         progressBar.subviews[1].clipsToBounds = true
         
         QuestionViewController.currentGameMode = SettingsViewController.getCurrentGameMode()
+        print(QuestionViewController.currentGameMode)
         if (QuestionViewController.currentGameMode == 0){
             progressBar.progress = Float(QuestionViewController.questionsAnswered)/Float(numRoundQuestions)
         } else if (QuestionViewController.currentGameMode == 1){
             progressBar.progress = 1.0
-            //progressBarTimer.invalidate()
             QuestionViewController.progressBarTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
             //progressBarTimer.fire()
         }
@@ -137,10 +137,6 @@ class QuestionViewController: UIViewController {
         return String(SettingsViewController.getCurrentTriviaQuestionID())
     }
     
-    static func updateGameMode(gameMode: Int){
-        QuestionViewController.currentGameMode = gameMode
-    }
-    
     func getQuestionAmount() -> Int {
         //sets progress bar total questions asked
         numRoundQuestions = SettingsViewController.getQuestionAmountAskedSliderValue()
@@ -160,7 +156,6 @@ class QuestionViewController: UIViewController {
             } else if (QuestionViewController.currentGameMode == 1){
                 //progressBar.progress = 0.5
             }
-            
             
             questionAskedLabel.text = resultsFromAPI[QuestionViewController.questionsAnswered].getQuestion().replacingOccurrences(of: "&quot;", with: "'").replacingOccurrences(of:"&#039;", with:"'").replacingOccurrences(of:"&eacute;", with:"é").replacingOccurrences(of:"&amp;", with:"&")
             
@@ -229,15 +224,18 @@ class QuestionViewController: UIViewController {
     
     
     @IBAction func Button1(_ sender: UIButton) {
-        if correctAnswerNumber == 0{
+        if (b1Pressed == false && correctAnswerNumber == 0){
             //
-            progressBar.progress += 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress += 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
             //
             guessedCorrectAnswer = true
@@ -245,32 +243,36 @@ class QuestionViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.askNextQuestion()
             }
-        } else if (b1Pressed == false && guessedCorrectAnswer == false){
-            //
-            progressBar.progress -= 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+        }else if (b1Pressed == false && guessedCorrectAnswer == false){
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress -= 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-            b1Pressed = true
         }
+        b1Pressed = true
     }
     @IBAction func Button2(_ sender: UIButton) {
-        if correctAnswerNumber == 1{
+        if (b2Pressed == false && correctAnswerNumber == 1){
             //
-            progressBar.progress += 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress += 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
             //
             guessedCorrectAnswer = true
@@ -279,86 +281,94 @@ class QuestionViewController: UIViewController {
                 self.askNextQuestion()
             }
         }else if (b2Pressed == false && guessedCorrectAnswer == false){
-            //
-            progressBar.progress -= 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress -= 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-            b2Pressed = true
+            
         }
+        b2Pressed = true
     }
     @IBAction func Button3(_ sender: UIButton) {
-        if correctAnswerNumber == 2{
-            //
-            progressBar.progress += 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+        if (b3Pressed == false && correctAnswerNumber == 2){
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress += 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             guessedCorrectAnswer = true
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.askNextQuestion()
             }
         }else if (b3Pressed == false && guessedCorrectAnswer == false){
-            //
-            progressBar.progress -= 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress -= 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-            b3Pressed = true
+            
         }
+        b3Pressed = true
     }
     @IBAction func Button4(_ sender: UIButton) {
-        if correctAnswerNumber == 3{
-            //
-            progressBar.progress += 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+        if (b4Pressed == false && correctAnswerNumber == 3){
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress += 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             guessedCorrectAnswer = true
             sender.backgroundColor = UIColor.green.withAlphaComponent(0.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.askNextQuestion()
             }
         }else if (b4Pressed == false && guessedCorrectAnswer == false){
-            //
-            progressBar.progress -= 0.0167 * 5
-            progressBar.setProgress(progressBar.progress, animated: true)
-            if(progressBar.progress == 0.0)
-            {
-                QuestionViewController.progressBarTimer.invalidate()
-                let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
-                self.present(storyboardController, animated: true, completion: nil)
+            if QuestionViewController.currentGameMode == 1{
+                progressBar.progress -= 0.0167 * 5
+                progressBar.setProgress(progressBar.progress, animated: true)
+                if(progressBar.progress == 0.0)
+                {
+                    QuestionViewController.progressBarTimer.invalidate()
+                    let storyboardController = self.storyboard!.instantiateViewController(withIdentifier: "EndFreePlay")
+                    self.present(storyboardController, animated: true, completion: nil)
+                }
+                //
             }
-            //
             QuestionViewController.wrongAnswers += 1
             sender.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-            b4Pressed = true
+            
         }
+        b4Pressed = true
     }
 }
 
