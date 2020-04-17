@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyQuestionNumberCell" id="pdr-5N-GUP" customClass="QuestionNumberCell" customModule="Open_Trivia" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pdr-5N-GUP" id="UxI-eq-pRM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Questions Asked" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTt-er-HVe">
+                        <rect key="frame" x="0.0" y="8" width="375" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="WyZ-UG-SKH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v4j-Vk-ib8">
+                        <rect key="frame" x="20" y="45" width="335" height="47"/>
+                        <segments>
+                            <segment title="5"/>
+                            <segment title="10"/>
+                            <segment title="15"/>
+                            <segment title="20"/>
+                            <segment title="25"/>
+                        </segments>
+                        <connections>
+                            <action selector="questionNumberChanged:" destination="pdr-5N-GUP" eventType="valueChanged" id="76D-TB-wdz"/>
+                        </connections>
+                    </segmentedControl>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="v4j-Vk-ib8" firstAttribute="top" secondItem="gTt-er-HVe" secondAttribute="bottom" constant="12" id="0wh-mJ-njf"/>
+                    <constraint firstItem="gTt-er-HVe" firstAttribute="top" secondItem="UxI-eq-pRM" secondAttribute="top" constant="8" id="3cx-Sx-vkY"/>
+                    <constraint firstItem="v4j-Vk-ib8" firstAttribute="leading" secondItem="UxI-eq-pRM" secondAttribute="leading" constant="20" id="J3p-xE-nUa"/>
+                    <constraint firstAttribute="trailing" secondItem="gTt-er-HVe" secondAttribute="trailing" id="mM5-Bw-dv9"/>
+                    <constraint firstAttribute="bottom" secondItem="v4j-Vk-ib8" secondAttribute="bottom" constant="25" id="ojK-ky-l7w"/>
+                    <constraint firstAttribute="trailing" secondItem="v4j-Vk-ib8" secondAttribute="trailing" constant="20" id="tSY-5f-hsl"/>
+                    <constraint firstItem="gTt-er-HVe" firstAttribute="leading" secondItem="UxI-eq-pRM" secondAttribute="leading" id="teG-rg-nXG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="questionNumberAsked" destination="v4j-Vk-ib8" id="q0E-OC-JRY"/>
+            </connections>
+            <point key="canvasLocation" x="-63" y="-64"/>
+        </tableViewCell>
+    </objects>
+</document>

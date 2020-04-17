@@ -30,7 +30,7 @@ class GameSettingsViewController: UIViewController {
     
 
     @IBAction func changeUsername(_ sender: Any) {
-        print(username.text)
+        //print("Username: \(username.text)")
         let defaults = UserDefaults.standard
         defaults.set(username.text, forKey: defaultsKeys.keyOne)
         defaults.set("Another String Value", forKey: defaultsKeys.keyTwo)
