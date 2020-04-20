@@ -52,7 +52,10 @@ class EndgameViewController: UIViewController {
         } else if dataStore.currentGameMode == GameTypes.timedMode{
             AccuracyLabel.text = ("You answered a total of \(dataStore.amountOfQuestionsAnswered) questions correct.")
             let defaults = UserDefaults.standard
-            defaults.set(dataStore.amountOfQuestionsAnswered, forKey: "\(dataStore.currentTriviaCategoryID)")
+            
+            if defaults.integer(forKey: "\(dataStore.currentTriviaCategoryID)") < dataStore.amountOfQuestionsAnswered{
+                defaults.set(dataStore.amountOfQuestionsAnswered, forKey: "\(dataStore.currentTriviaCategoryID)")
+            }
         } else {
             AccuracyLabel.isHidden = true
         }

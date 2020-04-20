@@ -63,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  //https://appicon.co
  
  Todo:
+ Add sound
  Center vertically cells in settings
  Update app store pictures
  Question of the day
