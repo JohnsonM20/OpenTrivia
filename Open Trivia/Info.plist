@@ -2,29 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!--
-    <key>UIApplicationShortcutItems</key>
-    <array>
-        <dict>
-            <key>UIApplicationShortcutItemType</key>
-            <string>Matthew-Johnson.OpenTrivia.FreePlay</string>
-            <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutIconTypePlay</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>Free Play</string>
-        </dict>
-        <dict>
-            <key>UIApplicationShortcutItemType</key>
-            <string>Matthew-Johnson.OpenTrivia.TimedMode</string>
-            <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutIconTypeAlarm</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>Timed Mode</string>
-        </dict>
-    </array>
-    -->
-	<key>NSHumanReadableCopyright</key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -47,6 +24,8 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

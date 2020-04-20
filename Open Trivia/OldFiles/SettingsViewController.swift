@@ -40,7 +40,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         selectorBackground.layer.cornerRadius = 15
         selectorBackground.layer.masksToBounds = true
         
-        if  currentGameMode == 0{
+        if currentGameMode == 0{
             questionNumberAskedSlider.isHidden = false
             questionsAskedLabel.isHidden = false
             minimumAllowedQuestions.isHidden = false
@@ -216,7 +216,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             //set properties on dvc
             
             if let nextViewController = segue.destination as? QuestionViewController {
-                nextViewController.settings = self //Or pass any values
+                //nextViewController.settings = self //Or pass any values
             }
             
         }

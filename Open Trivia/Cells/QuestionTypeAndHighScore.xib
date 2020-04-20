@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyMultiCell" rowHeight="369" id="PKH-aa-c1e" customClass="QuestionTypeAndHighScoreCell" customModule="Open_Trivia" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="369"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PKH-aa-c1e" id="Qh0-A2-XRM">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="369"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozN-iZ-sFX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dce-Po-dRi">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dce-Po-dRi" firstAttribute="leading" secondItem="ozN-iZ-sFX" secondAttribute="leading" id="YuZ-ej-gzE"/>
+                            <constraint firstAttribute="bottom" secondItem="dce-Po-dRi" secondAttribute="bottom" id="dAS-Ah-tUK"/>
+                            <constraint firstAttribute="height" constant="220" id="dtQ-LO-7we"/>
+                            <constraint firstAttribute="trailing" secondItem="dce-Po-dRi" secondAttribute="trailing" id="elv-8W-h5E"/>
+                            <constraint firstItem="dce-Po-dRi" firstAttribute="top" secondItem="ozN-iZ-sFX" secondAttribute="top" id="fje-aY-Bz6"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOJ-mJ-7RE">
+                        <rect key="frame" x="0.0" y="235" width="414" height="119"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score for *Category*: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObX-gn-S9C">
+                                <rect key="frame" x="0.0" y="10" width="414" height="99"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ObX-gn-S9C" firstAttribute="top" secondItem="fOJ-mJ-7RE" secondAttribute="top" constant="10" id="3rr-Gu-GBu"/>
+                            <constraint firstAttribute="trailing" secondItem="ObX-gn-S9C" secondAttribute="trailing" id="86H-Mt-yJi"/>
+                            <constraint firstItem="ObX-gn-S9C" firstAttribute="leading" secondItem="fOJ-mJ-7RE" secondAttribute="leading" id="TE9-ug-AiR"/>
+                            <constraint firstAttribute="bottom" secondItem="ObX-gn-S9C" secondAttribute="bottom" constant="10" id="uXh-Vm-uVH"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="fOJ-mJ-7RE" secondAttribute="bottom" constant="15" id="1FR-gO-upq"/>
+                    <constraint firstItem="ozN-iZ-sFX" firstAttribute="top" secondItem="Qh0-A2-XRM" secondAttribute="top" id="FyI-Zv-Srz"/>
+                    <constraint firstItem="ozN-iZ-sFX" firstAttribute="leading" secondItem="Qh0-A2-XRM" secondAttribute="leading" id="Mrf-65-nTc"/>
+                    <constraint firstItem="fOJ-mJ-7RE" firstAttribute="top" secondItem="ozN-iZ-sFX" secondAttribute="bottom" constant="15" id="hxx-dl-tKW"/>
+                    <constraint firstAttribute="trailing" secondItem="fOJ-mJ-7RE" secondAttribute="trailing" id="tta-y3-asE"/>
+                    <constraint firstAttribute="trailing" secondItem="ozN-iZ-sFX" secondAttribute="trailing" id="x4G-Vl-XZU"/>
+                    <constraint firstItem="fOJ-mJ-7RE" firstAttribute="leading" secondItem="Qh0-A2-XRM" secondAttribute="leading" id="zZ4-4r-PH7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="picker" destination="dce-Po-dRi" id="mGW-lM-EpE"/>
+                <outlet property="pickerBorder" destination="ozN-iZ-sFX" id="W5Q-gY-a0N"/>
+                <outlet property="score" destination="ObX-gn-S9C" id="scg-6S-fiI"/>
+                <outlet property="scoreView" destination="fOJ-mJ-7RE" id="Ei8-k3-Sqm"/>
+            </connections>
+            <point key="canvasLocation" x="14.492753623188406" y="0.33482142857142855"/>
+        </tableViewCell>
+    </objects>
+</document>

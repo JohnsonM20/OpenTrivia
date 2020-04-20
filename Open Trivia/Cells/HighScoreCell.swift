@@ -9,10 +9,16 @@
 import UIKit
 
 class HighScoreCell: UITableViewCell {
-
+    
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var viewLabel: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        viewLabel.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        viewLabel.layer.cornerRadius = 15
+        viewLabel.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

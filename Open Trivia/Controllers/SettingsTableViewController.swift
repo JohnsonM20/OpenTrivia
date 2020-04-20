@@ -11,10 +11,18 @@ import UIKit
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var table: UITableView!
-    let gameMode = (UIApplication.shared.delegate as! AppDelegate).data.gameMode
+    let dataStore = (UIApplication.shared.delegate as! AppDelegate).data
+    var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = [UIColor(red: 0/255.0, green: 180/255.0, blue: 106/255.0, alpha: 1.0).cgColor, UIColor(red: 63/255.0, green: 161/255.0, blue: 200/255.0, alpha: 1.0).cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        dataStore.resetData()
+        
         table.separatorStyle = UITableViewCell.SeparatorStyle.none
         table.dataSource = self
         table.delegate = self
@@ -27,42 +35,46 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         table.register(descriptionCellNib, forCellReuseIdentifier: TableView.CellIdentifiers.gameDescriptionCell)
         let highScoreCellNib = UINib(nibName: "HighScore", bundle: nil)
         table.register(highScoreCellNib, forCellReuseIdentifier: TableView.CellIdentifiers.highScoreCell)
+        let loadingCellNib = UINib(nibName: "Loading", bundle: nil)
+        table.register(loadingCellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
+        let multiCell = UINib(nibName: "QuestionTypeAndHighScore", bundle: nil)
+        table.register(multiCell, forCellReuseIdentifier: TableView.CellIdentifiers.TypeAndScoreCell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if gameMode == GameTypes.freePlay { // 4 rows
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else if dataStore.currentGameMode == GameTypes.freePlay { // 3 rows
             if indexPath.row == 0{
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.gameDescriptionCell, for: indexPath) as! GameDescriptionCell
                 return cell
             } else if indexPath.row == 1{
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.questionNumberCell, for: indexPath) as! QuestionNumberCell
                 return cell
-            } else if indexPath.row == 2{
+            } else /*if indexPath.row == 2*/{
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.questionTypeCell, for: indexPath) as! QuestionTypeCell
-                return cell
-            } else /*if indexPath.row == 3*/{
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.highScoreCell, for: indexPath) as! HighScoreCell
                 return cell
             }
         } else { // 3 rows for timed
             if indexPath.row == 0{
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.gameDescriptionCell, for: indexPath) as! GameDescriptionCell
                 return cell
-            } else if indexPath.row == 1{
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.questionTypeCell, for: indexPath) as! QuestionTypeCell
-                return cell
-            } else /*if indexPath.row == 2*/{
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.highScoreCell, for: indexPath) as! HighScoreCell
+            } else /*if indexPath.row == 1*/{
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.TypeAndScoreCell, for: indexPath) as! QuestionTypeAndHighScoreCell
                 return cell
             }
         }
-        //cell.questionNumberAsked.titleForSegment(at: cell.questionNumberAsked.selectedSegmentIndex)
-        //cell.nameLabel.text = searchResult.name cell.artistNameLabel.text = searchResult.artistName
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CellGameModeSections.getNumberOfRowsInSection(gameMode: gameMode)
+        if isLoading {
+            return 1
+        } else {
+            return CellGameModeSections.getNumberOfRowsInSection(gameMode: dataStore.currentGameMode)
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,21 +86,29 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func playButtonPushed(_ sender: Any) {
+    @IBAction func playButtonPushed(_ sender: UIButton) {
+        sender.isEnabled = false
+        isLoading = true
+        table.reloadData()
+        
+        if dataStore.currentGameMode != GameTypes.freePlay{
+            dataStore.totalAmountOfQuestions = 50
+        }
+        
+        dataStore.getTriviaQuestionsFromAPI(){
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "settingsDone", sender:self)
+            }
+        }
     }
     
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "settingsDone" {
+            //if let nextViewController = segue.destination as? QuestionViewController {
+                //nextViewController.settings = self //Or pass any values
+            //}
+        }
     }
-    */
 }
 
 struct TableView {
@@ -97,5 +117,7 @@ struct TableView {
         static let questionTypeCell = "MyQuestionTypeCell"
         static let gameDescriptionCell = "MyGameDescriptionCell"
         static let highScoreCell = "MyHighScoreCell"
+        static let loadingCell = "MyLoadingCell"
+        static let TypeAndScoreCell = "MyMultiCell"
     }
 }

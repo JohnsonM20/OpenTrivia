@@ -9,29 +9,99 @@
 import Foundation
 
 class DataStore{
+    var currentGameMode = GameTypes.freePlay
+    var allTriviaCategories: [SingleTriviaCategory] = []
     
-    var questionsAnswered = 0
-    var totalGuesses = 0
-    var gameMode = GameTypes.freePlay
-    var sliderPercentDoneValue = Int()
+    var amountOfQuestionsAnswered = 0
+    var amountOfTotalClicks = 0
+    var amountOfInitialCorrectAnswers = 0
     
-    func setGameMode(_ mode: Int){
-        gameMode = mode
+    var currentTriviaCategoryID = 0
+    var totalAmountOfQuestions = 0
+    
+    var responseCode: Int = 0
+    var questions: [QuestionArray] = []
+    
+    init() {
+        getTriviaCategoriesFromAPI()
     }
     
-    func getGameMode() -> Int{
-        return gameMode
+    func resetData(){
+        amountOfQuestionsAnswered = 0
+        amountOfTotalClicks = 0
+        totalAmountOfQuestions = 0
+        amountOfInitialCorrectAnswers = 0
+        
+        questions = []
     }
     
-    func setQuestionsAnsweredAndTotalGuesses(questions: Int, guesses: Int){
-        questionsAnswered = questions
-        totalGuesses = guesses
+    func getTriviaCategoriesFromAPI(){
+        
+        let urlString = String(format: "https://opentdb.com/api_category.php")
+        let url = URL(string: urlString)
+        do{
+            let data = try Data(contentsOf:url!)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(TriviaCategoryList.self, from:data)
+            allTriviaCategories = result.trivia_categories
+        } catch {
+            do {
+                let path = Bundle.main.path(forResource: "categories", ofType: "txt")
+                let categoryString = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
+                let data = categoryString.data(using: .utf8)
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(TriviaCategoryList.self, from:data!)
+                allTriviaCategories = result.trivia_categories
+            }
+            catch {print("error")}
+        }
     }
     
-    func getQuestionsAnsweredAndTotalGuesses() -> (Int, Int){
-        return (questions: questionsAnswered, guesses: totalGuesses)
-    }
+    func getTriviaQuestionsFromAPI(finished: @escaping () -> Void){
+        
+        //let urlString = String(format:"https://opentdb.com/api.php?amount=\(self.totalAmountOfQuestions)&category=\(self.currentTriviaCategoryID)")
+        // Replace all code after this with new code below // 1
+        let queue = DispatchQueue.global()
+        queue.async {
+            do{
+                var subtractQuestionsFromTotalIfError = 0
+                repeat{
+                    //print(subtractQuestionsFromTotalIfError)
+                    let urlString = String(format:"https://opentdb.com/api.php?amount=\(self.totalAmountOfQuestions-subtractQuestionsFromTotalIfError)&category=\(self.currentTriviaCategoryID)")
+                    let url = URL(string: urlString)
+                    let JSONdata = try Data(contentsOf:url!)//, using: .utf8
+                    let decoder = JSONDecoder()
+                    let decodedJSON = try decoder.decode(ResultArray.self, from:JSONdata)
+                    let results = decodedJSON.results
     
+                    self.responseCode = decodedJSON.response_code
+                    self.questions = results
+                    if self.responseCode == 1{
+                        subtractQuestionsFromTotalIfError+=1
+                    }
+                    //print("Response code: \(self.responseCode)")
+                    
+                } while self.responseCode != ResponseCodes.success
+            } catch {
+                do {
+                    print("Went to txt!")
+                    let path = Bundle.main.path(forResource: "questions", ofType: "txt") // file path for file "data.txt"
+                    let categoryString = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
+                    let data = categoryString.data(using: .utf8)
+                    //print(data)
+                    let decoder = JSONDecoder()
+                    let decodedJSON = try decoder.decode(ResultArray.self, from:data!)
+                    
+                    let results = decodedJSON.results
+                    self.responseCode = decodedJSON.response_code
+                    self.questions = results
+                } catch {print("error")}
+            }
+            //print("DONE!")
+            finished()
+        }
+        
+    }
 }
 
 struct GameTypes {
@@ -41,9 +111,22 @@ struct GameTypes {
     static let joinMultiplayer = 3
 }
 
+struct QuestionTypes {
+    static let multiple = "multiple"
+    static let timedMode = "boolean"
+}
+
+struct ResponseCodes {
+    static let success = 0
+    static let tooManyQuestions = 1
+    static let invalidURL = 2
+    static let tokenDoesNotExist = 3
+    static let tokenRanOutOfQuestions = 4
+}
+
 struct CellGameModeSections {
-    static let freePlay = 4
-    static let timedMode = 3
+    static let freePlay = 3
+    static let timedMode = 2
     static let startMultiplayer = 3
     static let joinMultiplayer = 3
     

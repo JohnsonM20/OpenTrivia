@@ -3,36 +3,49 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyQuestionTypeCell" rowHeight="200" id="BW0-VV-vM5" customClass="QuestionTypeCell" customModule="Open_Trivia" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="317" id="NEp-Ph-D0m" customClass="QuestionTypeCell" customModule="Open_Trivia" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="317"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BW0-VV-vM5" id="gbx-1w-55u">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NEp-Ph-D0m" id="18D-Gj-y1F">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgW-kq-F2L">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDH-sw-4oM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="302"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WhV-zg-bUl">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="302"/>
+                            </pickerView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </pickerView>
+                        <constraints>
+                            <constraint firstItem="WhV-zg-bUl" firstAttribute="top" secondItem="sDH-sw-4oM" secondAttribute="top" id="STN-zy-MXS"/>
+                            <constraint firstItem="WhV-zg-bUl" firstAttribute="leading" secondItem="sDH-sw-4oM" secondAttribute="leading" id="ckn-q0-XTa"/>
+                            <constraint firstAttribute="trailing" secondItem="WhV-zg-bUl" secondAttribute="trailing" id="hrX-8q-PFh"/>
+                            <constraint firstAttribute="bottom" secondItem="WhV-zg-bUl" secondAttribute="bottom" id="swG-ei-JHB"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="PgW-kq-F2L" firstAttribute="leading" secondItem="gbx-1w-55u" secondAttribute="leading" id="BwC-y9-1p7"/>
-                    <constraint firstAttribute="trailing" secondItem="PgW-kq-F2L" secondAttribute="trailing" id="KeA-R6-sQe"/>
-                    <constraint firstAttribute="bottom" secondItem="PgW-kq-F2L" secondAttribute="bottom" id="e4i-6C-jj6"/>
-                    <constraint firstItem="PgW-kq-F2L" firstAttribute="top" secondItem="gbx-1w-55u" secondAttribute="top" id="j4j-O3-RJj"/>
+                    <constraint firstItem="sDH-sw-4oM" firstAttribute="leading" secondItem="18D-Gj-y1F" secondAttribute="leading" id="BrL-rx-PgX"/>
+                    <constraint firstItem="sDH-sw-4oM" firstAttribute="top" secondItem="18D-Gj-y1F" secondAttribute="top" id="XZl-XV-MtF"/>
+                    <constraint firstAttribute="bottom" secondItem="sDH-sw-4oM" secondAttribute="bottom" constant="15" id="fhz-CQ-z8f"/>
+                    <constraint firstAttribute="trailing" secondItem="sDH-sw-4oM" secondAttribute="trailing" id="kG0-zA-sqk"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="questionTypeAsked" destination="PgW-kq-F2L" id="sl6-fh-pye"/>
+                <outlet property="borderView" destination="sDH-sw-4oM" id="5a9-YK-A8E"/>
+                <outlet property="questionTypeAsked" destination="WhV-zg-bUl" id="Ew0-5L-NDm"/>
             </connections>
-            <point key="canvasLocation" x="94.927536231884062" y="-45.535714285714285"/>
+            <point key="canvasLocation" x="14.492753623188406" y="-17.075892857142858"/>
         </tableViewCell>
     </objects>
 </document>

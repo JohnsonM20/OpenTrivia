@@ -10,23 +10,26 @@ import UIKit
 
 class QuestionNumberCell: UITableViewCell {
     
+    @IBOutlet weak var borderView: UIView!
     @IBOutlet var questionNumberAsked: UISegmentedControl!
+    var dataStore = (UIApplication.shared.delegate as! AppDelegate).data
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        dataStore.totalAmountOfQuestions = 15
+        questionNumberAsked.selectedSegmentIndex = 2
+        //questionNumberAsked.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 26)], for: .normal)
         
         questionNumberAsked.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
         questionNumberAsked.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        self.layer.cornerRadius = 15
-        self.layer.masksToBounds = true
+        borderView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        borderView.layer.cornerRadius = 15
+        borderView.layer.masksToBounds = true
     }
     
     @IBAction func questionNumberChanged(_ sender: UISegmentedControl) {
-        if #available(iOS 13.0, *) {
-            //sender.selectedSegmentTintColor = .black
-            //sender.
-        }
+        let questionAmount = Int(sender.titleForSegment(at: questionNumberAsked.selectedSegmentIndex)!) ?? 10
+        dataStore.totalAmountOfQuestions = questionAmount
     }
     
 

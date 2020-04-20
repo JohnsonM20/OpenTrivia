@@ -15,6 +15,11 @@ class GameSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = [UIColor(red: 0/255.0, green: 180/255.0, blue: 106/255.0, alpha: 1.0).cgColor, UIColor(red: 63/255.0, green: 161/255.0, blue: 200/255.0, alpha: 1.0).cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
         let defaults = UserDefaults.standard
         if let stringOne = defaults.string(forKey: defaultsKeys.keyOne) {
             username.text = stringOne
@@ -24,8 +29,6 @@ class GameSettingsViewController: UIViewController {
             print(stringTwo) // Another String Value
         }
          */
-
-        // Do any additional setup after loading the view.
     }
     
 

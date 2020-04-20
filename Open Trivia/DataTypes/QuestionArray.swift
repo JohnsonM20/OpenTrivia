@@ -28,7 +28,7 @@ class QuestionArray: Codable, CustomStringConvertible {
         return (type)
     }
 
-    func getAnswers() -> ([Array<String>], Int){
+    func getAnswers() -> (answerArray: [Array<String>], answerSlot: Int){
         var answers = [Array<String>]()
         answers.append([correct_answer])
         for i in 0..<incorrect_answers.count{

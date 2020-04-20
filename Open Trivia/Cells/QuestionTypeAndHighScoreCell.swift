@@ -1,39 +1,46 @@
 //
-//  QuestionTypeCell.swift
+//  PickerAndHighScore.swift
 //  Open Trivia
 //
-//  Created by Matthew Johnson on 4/16/20.
+//  Created by Matthew Johnson on 4/20/20.
 //  Copyright © 2020 Matthew Johnson. All rights reserved.
 //
 
 import UIKit
 
-class QuestionTypeCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate {
+class QuestionTypeAndHighScoreCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var questionTypeAsked: UIPickerView!
+    @IBOutlet weak var pickerBorder: UIView!
+    @IBOutlet weak var scoreView: UIView!
+    
+    @IBOutlet weak var picker: UIPickerView!
+    @IBOutlet weak var score: UILabel!
     
     var dataStore = (UIApplication.shared.delegate as! AppDelegate).data
     var currentRowSelectedInPicker = 0
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        dataStore.currentTriviaCategoryID = 0
         
-        borderView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        borderView.layer.cornerRadius = 15
-        borderView.layer.masksToBounds = true
-
-        questionTypeAsked.dataSource = self
-        questionTypeAsked.delegate = self
-        questionTypeAsked.selectRow(currentRowSelectedInPicker, inComponent: 0, animated: true)
-
+        pickerBorder.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        pickerBorder.layer.cornerRadius = 15
+        pickerBorder.layer.masksToBounds = true
+        scoreView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        scoreView.layer.cornerRadius = 15
+        scoreView.layer.masksToBounds = true
+        
+        picker.dataSource = self
+        picker.delegate = self
+        picker.selectRow(currentRowSelectedInPicker, inComponent: 0, animated: true)
+        
+        let defaults = UserDefaults.standard
+        score.text = ("High Score for category: \(defaults.string(forKey: "\(dataStore.currentTriviaCategoryID)") ?? "0")")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-            // Configure the view for the selected state
+        // Configure the view for the selected state
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
@@ -48,6 +55,9 @@ class QuestionTypeCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDel
         if dataStore.currentGameMode == GameTypes.joinMultiplayer || dataStore.currentGameMode == GameTypes.startMultiplayer{
             //multiService.send(ObjectAndChangedTo: "\(send.pickerQuestionType)\(questionTypePicker.selectedRow(inComponent: 0))")
         }
+        
+        let defaults = UserDefaults.standard
+        score.text = ("High Score for category: \(defaults.string(forKey: "\(dataStore.currentTriviaCategoryID)") ?? "0")")
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -71,4 +81,5 @@ class QuestionTypeCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDel
             return NSAttributedString(string: dataStore.allTriviaCategories[row-1].name, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         }
     }
+    
 }

@@ -59,6 +59,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 /*
  https://connect.unity.com/p/open-quiz-a-trivia-app-made-with-opentdb-api
+ Font: Source Sans Variable
+ //https://appicon.co
  
-
+ Todo:
+ Center vertically cells in settings
+ Update app store pictures
+ Question of the day
+ Multiplayer mode
+ Coins from answering question on first guess, question of the day streaks, watching ads
+    +1 coin for each correct first guess on free play
+    +2 coins for timed mode
+ Use coins to buy background colors, unlock difficulty modes, buy add-free play for a certain amount of time
+ End screen that says different messages based on percentage of questions correct
+ Show ads after every how many games played, maybe 3-5
+ 
+883
  */
