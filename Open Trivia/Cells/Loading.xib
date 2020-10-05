@@ -17,27 +17,27 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X94-QA-ESl">
-                        <rect key="frame" x="155.5" y="211" width="103" height="21"/>
+                        <rect key="frame" x="137.5" y="211" width="139.5" height="31.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32b-Qj-9UI">
-                                <rect key="frame" x="0.0" y="0.0" width="75" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="31.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MDW-NV-rQ9">
-                                <rect key="frame" x="83" y="1" width="20" height="20"/>
+                                <rect key="frame" x="116" y="5" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="MDW-NV-rQ9" secondAttribute="bottom" id="0Av-u7-5Yn"/>
-                            <constraint firstAttribute="trailing" secondItem="MDW-NV-rQ9" secondAttribute="trailing" id="BMn-MW-lKd"/>
+                            <constraint firstAttribute="bottom" secondItem="MDW-NV-rQ9" secondAttribute="bottom" constant="6.5" id="0Av-u7-5Yn"/>
+                            <constraint firstAttribute="trailing" secondItem="MDW-NV-rQ9" secondAttribute="trailing" constant="3.5" id="BMn-MW-lKd"/>
                             <constraint firstItem="32b-Qj-9UI" firstAttribute="top" secondItem="X94-QA-ESl" secondAttribute="top" id="DM4-s0-x6T"/>
                             <constraint firstItem="32b-Qj-9UI" firstAttribute="leading" secondItem="X94-QA-ESl" secondAttribute="leading" id="UVV-oI-iKG"/>
                             <constraint firstAttribute="bottom" secondItem="32b-Qj-9UI" secondAttribute="bottom" id="Z7g-hT-TGP"/>
-                            <constraint firstItem="MDW-NV-rQ9" firstAttribute="leading" secondItem="32b-Qj-9UI" secondAttribute="trailing" constant="8" id="ep4-ca-QEP"/>
-                            <constraint firstItem="MDW-NV-rQ9" firstAttribute="leading" secondItem="32b-Qj-9UI" secondAttribute="trailing" constant="8" id="iHa-Hp-NrS"/>
+                            <constraint firstItem="MDW-NV-rQ9" firstAttribute="leading" secondItem="32b-Qj-9UI" secondAttribute="trailing" constant="4.5" id="ep4-ca-QEP"/>
+                            <constraint firstItem="MDW-NV-rQ9" firstAttribute="leading" secondItem="32b-Qj-9UI" secondAttribute="trailing" constant="4.5" id="iHa-Hp-NrS"/>
                         </constraints>
                     </view>
                 </subviews>

@@ -28,6 +28,7 @@ class QuestionNumberCell: UITableViewCell {
     }
     
     @IBAction func questionNumberChanged(_ sender: UISegmentedControl) {
+        dataStore.playClickierSound()
         let questionAmount = Int(sender.titleForSegment(at: questionNumberAsked.selectedSegmentIndex)!) ?? 10
         dataStore.totalAmountOfQuestions = questionAmount
     }

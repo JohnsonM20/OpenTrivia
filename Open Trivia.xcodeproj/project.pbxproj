@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3405604C233A7345001323D1 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3405604B233A7345001323D1 /* QuestionViewController.swift */; };
-		34130A122344D263007B8FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34130A112344D263007B8FC9 /* SettingsViewController.swift */; };
 		34365B272331369700AA462A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34365B262331369700AA462A /* AppDelegate.swift */; };
 		34365B292331369700AA462A /* TitleScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34365B282331369700AA462A /* TitleScreenViewController.swift */; };
 		34365B2E2331369900AA462A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34365B2D2331369900AA462A /* Assets.xcassets */; };
@@ -16,6 +15,8 @@
 		344DC88F24410BDB00657F84 /* questions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 344DC88E24410BDB00657F84 /* questions.txt */; };
 		344EB80F244DC5BB00D047F8 /* QuestionTypeAndHighScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344EB80D244DC5BB00D047F8 /* QuestionTypeAndHighScoreCell.swift */; };
 		344EB810244DC5BB00D047F8 /* QuestionTypeAndHighScore.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344EB80E244DC5BB00D047F8 /* QuestionTypeAndHighScore.xib */; };
+		34514CAB248ED36000839AE2 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34514CA9248ED35F00839AE2 /* correct.wav */; };
+		34514CAC248ED36000839AE2 /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34514CAA248ED36000839AE2 /* wrong.wav */; };
 		3452F14C2443406300881494 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3452F14B2443406300881494 /* SceneDelegate.swift */; };
 		3452F14E2444954700881494 /* QuestionNumber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3452F14D2444954600881494 /* QuestionNumber.xib */; };
 		3452F1502447BB5D00881494 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3452F14F2447BB5D00881494 /* SettingsTableViewController.swift */; };
@@ -35,6 +36,10 @@
 		347F6DB52448FBAD007C6D8A /* HighScore.xib in Resources */ = {isa = PBXBuildFile; fileRef = 347F6DB32448FBAD007C6D8A /* HighScore.xib */; };
 		348940BA244B39B6003FA371 /* Loading.xib in Resources */ = {isa = PBXBuildFile; fileRef = 348940B9244B39B6003FA371 /* Loading.xib */; };
 		349ADB8523AEE32200C67E84 /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349ADB8423AEE32200C67E84 /* GameSettingsViewController.swift */; };
+		34A4C783248EB80500C80C27 /* Happy Whistling Ukulele.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34A4C77A248EB80100C80C27 /* Happy Whistling Ukulele.mp3 */; };
+		34A4C786248EB80500C80C27 /* Horns.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34A4C77D248EB80200C80C27 /* Horns.mp3 */; };
+		34A4C787248EB80500C80C27 /* Wakka Wakka.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34A4C77E248EB80300C80C27 /* Wakka Wakka.mp3 */; };
+		34A4C797248EB81B00C80C27 /* Goodnightmare.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34A4C78E248EB81700C80C27 /* Goodnightmare.mp3 */; };
 		34E2DFE623EF6A9E002A7DC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34365B2F2331369900AA462A /* LaunchScreen.storyboard */; };
 		34E2DFE723EF6AC6002A7DC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34365B2A2331369700AA462A /* Main.storyboard */; };
 		34EC195E23467571009C8ACC /* EndgameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EC195D23467571009C8ACC /* EndgameViewController.swift */; };
@@ -42,7 +47,6 @@
 
 /* Begin PBXFileReference section */
 		3405604B233A7345001323D1 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
-		34130A112344D263007B8FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		34365B232331369700AA462A /* Open Trivia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open Trivia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34365B262331369700AA462A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34365B282331369700AA462A /* TitleScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreenViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +58,8 @@
 		344DC88E24410BDB00657F84 /* questions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = questions.txt; sourceTree = "<group>"; };
 		344EB80D244DC5BB00D047F8 /* QuestionTypeAndHighScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypeAndHighScoreCell.swift; sourceTree = "<group>"; };
 		344EB80E244DC5BB00D047F8 /* QuestionTypeAndHighScore.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTypeAndHighScore.xib; sourceTree = "<group>"; };
+		34514CA9248ED35F00839AE2 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
+		34514CAA248ED36000839AE2 /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
 		3452F14B2443406300881494 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3452F14D2444954600881494 /* QuestionNumber.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionNumber.xib; sourceTree = "<group>"; };
 		3452F14F2447BB5D00881494 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +79,10 @@
 		347F6DB32448FBAD007C6D8A /* HighScore.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HighScore.xib; sourceTree = "<group>"; };
 		348940B9244B39B6003FA371 /* Loading.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Loading.xib; sourceTree = "<group>"; };
 		349ADB8423AEE32200C67E84 /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
+		34A4C77A248EB80100C80C27 /* Happy Whistling Ukulele.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Happy Whistling Ukulele.mp3"; sourceTree = "<group>"; };
+		34A4C77D248EB80200C80C27 /* Horns.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Horns.mp3; sourceTree = "<group>"; };
+		34A4C77E248EB80300C80C27 /* Wakka Wakka.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Wakka Wakka.mp3"; sourceTree = "<group>"; };
+		34A4C78E248EB81700C80C27 /* Goodnightmare.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Goodnightmare.mp3; sourceTree = "<group>"; };
 		34EC195D23467571009C8ACC /* EndgameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndgameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,14 +97,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3424BD2B244A7DC3004644E9 /* OldFiles */ = {
-			isa = PBXGroup;
-			children = (
-				34130A112344D263007B8FC9 /* SettingsViewController.swift */,
-			);
-			path = OldFiles;
-			sourceTree = "<group>";
-		};
 		34365B1A2331369700AA462A = {
 			isa = PBXGroup;
 			children = (
@@ -120,7 +122,6 @@
 				347C3E4123EC545900242986 /* DataStore.swift */,
 				34E2DFE523EE0FE1002A7DC2 /* DataTypes */,
 				347C3E3F23EADA1C00242986 /* Controllers */,
-				3424BD2B244A7DC3004644E9 /* OldFiles */,
 				347C3E4023EADA6A00242986 /* SupportFiles */,
 			);
 			path = "Open Trivia";
@@ -147,6 +148,12 @@
 				34365B2F2331369900AA462A /* LaunchScreen.storyboard */,
 				34365B2D2331369900AA462A /* Assets.xcassets */,
 				3472C91723E30A3700557C20 /* MultiplayerService.swift */,
+				34A4C77A248EB80100C80C27 /* Happy Whistling Ukulele.mp3 */,
+				34A4C77D248EB80200C80C27 /* Horns.mp3 */,
+				34A4C77E248EB80300C80C27 /* Wakka Wakka.mp3 */,
+				34A4C78E248EB81700C80C27 /* Goodnightmare.mp3 */,
+				34514CA9248ED35F00839AE2 /* correct.wav */,
+				34514CAA248ED36000839AE2 /* wrong.wav */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -246,13 +253,19 @@
 				34E2DFE723EF6AC6002A7DC2 /* Main.storyboard in Resources */,
 				34E2DFE623EF6A9E002A7DC2 /* LaunchScreen.storyboard in Resources */,
 				347F6DB12448E8A5007C6D8A /* GameDescription.xib in Resources */,
+				34A4C783248EB80500C80C27 /* Happy Whistling Ukulele.mp3 in Resources */,
+				34A4C797248EB81B00C80C27 /* Goodnightmare.mp3 in Resources */,
 				347F6DAB2448832D007C6D8A /* QuestionType.xib in Resources */,
 				344DC88D24410BBA00657F84 /* categories.txt in Resources */,
 				344DC88F24410BDB00657F84 /* questions.txt in Resources */,
 				34365B2E2331369900AA462A /* Assets.xcassets in Resources */,
 				3452F14E2444954700881494 /* QuestionNumber.xib in Resources */,
+				34A4C787248EB80500C80C27 /* Wakka Wakka.mp3 in Resources */,
+				34A4C786248EB80500C80C27 /* Horns.mp3 in Resources */,
+				34514CAB248ED36000839AE2 /* correct.wav in Resources */,
 				348940BA244B39B6003FA371 /* Loading.xib in Resources */,
 				344EB810244DC5BB00D047F8 /* QuestionTypeAndHighScore.xib in Resources */,
+				34514CAC248ED36000839AE2 /* wrong.wav in Resources */,
 				347F6DB52448FBAD007C6D8A /* HighScore.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,7 +296,6 @@
 				3452F1502447BB5D00881494 /* SettingsTableViewController.swift in Sources */,
 				3472C91E23E9EC0000557C20 /* RankingsViewController.swift in Sources */,
 				3405604C233A7345001323D1 /* QuestionViewController.swift in Sources */,
-				34130A122344D263007B8FC9 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,13 +442,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 56YK987R2L;
 				INFOPLIST_FILE = "$(SRCROOT)/Open Trivia/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Matthew-Johnson.OpenTrivia";
 				PRODUCT_NAME = "Open Trivia";
 				SWIFT_VERSION = 5.0;
@@ -449,13 +462,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 56YK987R2L;
 				INFOPLIST_FILE = "$(SRCROOT)/Open Trivia/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Matthew-Johnson.OpenTrivia";
 				PRODUCT_NAME = "Open Trivia";
 				SWIFT_VERSION = 5.0;

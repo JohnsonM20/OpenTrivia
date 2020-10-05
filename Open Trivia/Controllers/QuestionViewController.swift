@@ -9,6 +9,7 @@
 import UIKit
 import JavaScriptCore
 import Foundation
+import AVFoundation
 
 class QuestionViewController: UIViewController {
     
@@ -27,6 +28,24 @@ class QuestionViewController: UIViewController {
     var progressBarTimer: Timer!
     
     let dataStore = (UIApplication.shared.delegate as! AppDelegate).data
+    var audioPlayer = AVAudioPlayer()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let defaults = UserDefaults.standard
+        
+        if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.yes {
+            var randomSong = SoundTypes.allLightMusic.randomElement()!
+            if dataStore.currentGameMode == GameTypes.timedMode {
+                randomSong = SoundTypes.allFastMusic.randomElement()!
+            }
+
+            let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "\(randomSong)", ofType: "mp3")!)
+            audioPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
+            audioPlayer.prepareToPlay()
+            audioPlayer.numberOfLoops = -1
+            audioPlayer.play()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +55,7 @@ class QuestionViewController: UIViewController {
         gradientLayer.colors = [UIColor(red: 0/255.0, green: 180/255.0, blue: 106/255.0, alpha: 1.0).cgColor, UIColor(red: 63/255.0, green: 161/255.0, blue: 200/255.0, alpha: 1.0).cgColor]
         self.view.layer.insertSublayer(gradientLayer, at: 0)
 
-        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 5)
+        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 4)
         progressBar.layer.cornerRadius = 10
         progressBar.clipsToBounds = true
         progressBar.layer.sublayers![1].cornerRadius = 10
@@ -57,7 +76,9 @@ class QuestionViewController: UIViewController {
         askNextQuestion()
     }
     
-    @IBAction func homePushed(_ sender: Any) {}
+    @IBAction func homePushed(_ sender: Any) {
+        dataStore.playTinkSound()
+    }
     
     @objc func updateProgressViewTimed(){
         progressBar.progress -= 0.0167
@@ -185,6 +206,7 @@ class QuestionViewController: UIViewController {
     }
     
     func correctButtonPressed(sender: UIButton){
+        dataStore.playCorrectSound()
         if isFirstGuess == true{
             dataStore.amountOfInitialCorrectAnswers += 1
         }
@@ -204,6 +226,7 @@ class QuestionViewController: UIViewController {
     }
     
     func wrongButtonPressed(sender: UIButton){
+        dataStore.playIncorrectSound()
         if dataStore.currentGameMode == GameTypes.timedMode{
             progressBar.progress -= 0.0167 * 5
             progressBar.setProgress(progressBar.progress, animated: true)
@@ -217,7 +240,8 @@ class QuestionViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //print("this is useless")
+        audioPlayer.stop()
+        
         if segue.identifier == "showRankings" {
             if let nextViewController = segue.destination as? RankingsViewController {
                 nextViewController.delegate = self

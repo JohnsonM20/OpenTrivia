@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var playButton: UIButton!
     @IBOutlet var table: UITableView!
     let dataStore = (UIApplication.shared.delegate as! AppDelegate).data
     var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        playButton.backgroundColor = UIColor(red: 129/255.0, green: 204/255.0, blue: 197/255.0, alpha: 1.0)
+        playButton.layer.shadowColor = UIColor(red: 90/255.0, green: 187/255.0, blue: 181/255.0, alpha: 1.0).cgColor
+        playButton.layer.shadowOffset = CGSize(width: 0.0, height: 8.0)
+        playButton.layer.shadowOpacity = 1.0
+        playButton.layer.cornerRadius = 20.0
+        playButton.layer.shadowRadius = 0.0
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds
@@ -39,6 +48,8 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         table.register(loadingCellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
         let multiCell = UINib(nibName: "QuestionTypeAndHighScore", bundle: nil)
         table.register(multiCell, forCellReuseIdentifier: TableView.CellIdentifiers.TypeAndScoreCell)
+        
+        centerTableContentsIfNeeded()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,12 +92,35 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         return 1
     }
     
+    func centerTableContentsIfNeeded() {
+        let screenSize = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        //let screenWidth = screenSize.height
+        //print(screenHeight)
+        let totalTableHeight = table.bounds.height
+        //print(totalTableHeight)
+        let contentHeight = 550.0//table.contentSize.height
+        //print(contentHeight)
+        //let contentWidth = table.frame.size.width//table.contentSize.width.
+        //print(contentWidth)
+        let contentCanBeCentered = contentHeight < Double(totalTableHeight)
+        let heightAdded = screenHeight/2-CGFloat(contentHeight)/1.5
+        if contentCanBeCentered && heightAdded > 0 {
+            table.contentInset = UIEdgeInsets(top: heightAdded, left: 0, bottom: 0, right: 0);
+            print(heightAdded)
+        }
+    }
+    
     @IBAction func homePushed(_ sender: Any) {
+        dataStore.playTinkSound()
+        
         //multiService.stopService()
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func playButtonPushed(_ sender: UIButton) {
+        dataStore.playTinkSound()
+        
         sender.isEnabled = false
         isLoading = true
         table.reloadData()
@@ -103,6 +137,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "settingsDone" {
             //if let nextViewController = segue.destination as? QuestionViewController {
                 //nextViewController.settings = self //Or pass any values

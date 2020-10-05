@@ -34,7 +34,7 @@ class QuestionTypeAndHighScoreCell: UITableViewCell, UIPickerViewDataSource, UIP
         picker.selectRow(currentRowSelectedInPicker, inComponent: 0, animated: true)
         
         let defaults = UserDefaults.standard
-        score.text = ("High Score for category: \(defaults.string(forKey: "\(dataStore.currentTriviaCategoryID)") ?? "0")")
+        score.text = ("High Score for category: \(defaults.string(forKey: "0") ?? "0")")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

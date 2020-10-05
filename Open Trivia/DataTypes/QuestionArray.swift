@@ -35,6 +35,13 @@ class QuestionArray: Codable, CustomStringConvertible {
             answers.append([incorrect_answers[i]])
         }
         answers = answers.shuffled()
+        print("\(answers[0][0])")
+        
+        if "\(answers[0][0])" == "False" && answers.count == 2{
+            answers[0][0] = "True"
+            answers[1][0] = "False"
+        }
+        
         //print("correct answer:", answers.firstIndex(of: [correct_answer])!)//Use to print correct answer from button 0-3
         answers.append(["\(answers.firstIndex(of: [correct_answer])!)"])
         let answerSlot = answers.firstIndex(of: [correct_answer])!

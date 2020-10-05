@@ -31,12 +31,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("mode")
                 // Using storyboard
                 let mainStoryboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-                let reqVC = mainStoryboard.instantiateViewController(withIdentifier: "Settings") as! SettingsViewController
+                //let reqVC = mainStoryboard.instantiateViewController(withIdentifier: "Settings") as! SettingsViewController
                 if let homeVC = self.window?.rootViewController as? UINavigationController {
                     // Push the new view controller
-                    homeVC.pushViewController(reqVC, animated: true)
+                    //homeVC.pushViewController(reqVC, animated: true)
                     // Call the method
-                    reqVC.currentGameMode = 0
+                    //reqVC.currentGameMode = 0
                 }
             default:
                 print("frefgbvfde")
