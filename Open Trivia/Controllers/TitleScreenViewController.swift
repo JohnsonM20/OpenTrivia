@@ -23,7 +23,7 @@ class TitleScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let defaults = UserDefaults.standard
         
-        if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.yes {
+        if defaults.bool(forKey: SoundTypes.isMusicPlaying) {
             let randomSong = SoundTypes.allLightMusic.randomElement()!
             print(randomSong)
             let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "\(randomSong)", ofType: "mp3")!)

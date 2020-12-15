@@ -33,7 +33,7 @@ class QuestionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let defaults = UserDefaults.standard
         
-        if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.yes {
+        if defaults.bool(forKey: "\(SoundTypes.isMusicPlaying)") {
             var randomSong = SoundTypes.allLightMusic.randomElement()!
             if dataStore.currentGameMode == GameTypes.timedMode {
                 randomSong = SoundTypes.allFastMusic.randomElement()!

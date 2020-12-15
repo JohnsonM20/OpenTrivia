@@ -14,8 +14,8 @@ class GameSettingsViewController: UIViewController {
     @IBOutlet var username: UITextField!
     @IBOutlet weak var save: UIButton!
     
-    @IBOutlet weak var soundSwitch: UISwitch!
-    @IBOutlet weak var buttonSwitch: UISwitch!
+    @IBOutlet weak var musicSwitch: UISwitch!
+    @IBOutlet weak var soundEffectSwitch: UISwitch!
     @IBOutlet weak var soundVisualSwitch: UISwitch!
     
     let dataStore = (UIApplication.shared.delegate as! AppDelegate).data
@@ -36,59 +36,52 @@ class GameSettingsViewController: UIViewController {
         gradientLayer.colors = [UIColor(red: 0/255.0, green: 180/255.0, blue: 106/255.0, alpha: 1.0).cgColor, UIColor(red: 63/255.0, green: 161/255.0, blue: 200/255.0, alpha: 1.0).cgColor]
         self.view.layer.insertSublayer(gradientLayer, at: 0)
         
-        if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.yes{
-            soundSwitch.isOn = true
+        if defaults.bool(forKey: SoundTypes.isMusicPlaying) {
+            musicSwitch.isOn = true
         } else {
-            soundSwitch.isOn = false
+            musicSwitch.isOn = false
         }
         
-        if defaults.integer(forKey: "\(SoundTypes.buttonOn)") == SoundTypes.yes{
-            buttonSwitch.isOn = true
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
+            soundEffectSwitch.isOn = true
         } else {
-            buttonSwitch.isOn = false
-        }
-        
-        if defaults.integer(forKey: "\(SoundTypes.soundVisualOn)") == SoundTypes.yes{
-            soundVisualSwitch.isOn = true
-        } else {
-            soundVisualSwitch.isOn = false
+            soundEffectSwitch.isOn = false
         }
         
     }
     
     
-    @IBAction func soundSwitchChanged(_ soundSwitch: UISwitch) {
+    @IBAction func useMusicSwitchChanged(_ musicSwitch: UISwitch) {
         dataStore.playClickierSound()
         
-        if soundSwitch.isOn{
-            defaults.set(SoundTypes.yes, forKey: "\(SoundTypes.soundOn)")
-            soundVisualSwitch.isEnabled = true
+        if musicSwitch.isOn {
+            defaults.set(true, forKey: SoundTypes.isMusicPlaying)
+            
         } else {
-            defaults.set(SoundTypes.no, forKey: "\(SoundTypes.soundOn)")
-            defaults.set(SoundTypes.no, forKey: "\(SoundTypes.soundVisualOn)")
-            soundVisualSwitch.isOn = false
-            soundVisualSwitch.isEnabled = false
+            defaults.set(false, forKey: SoundTypes.isMusicPlaying)
+            
         }
     }
     
-    @IBAction func buttonSoundChanged(_ visualSwitch: UISwitch) {
+    @IBAction func useSoundEffectsChanged(_ soundEffectSwitch: UISwitch) {
         dataStore.playClickierSound()
 
-        if buttonSwitch.isOn{
-            defaults.set(SoundTypes.yes, forKey: "\(SoundTypes.buttonOn)")
+        if soundEffectSwitch.isOn {
+            defaults.set(true, forKey: SoundTypes.useSoundEffects)
+            
         } else {
-            defaults.set(SoundTypes.no, forKey: "\(SoundTypes.buttonOn)")
+            defaults.set(false, forKey: SoundTypes.useSoundEffects)
         }
     }
     
     @IBAction func soundVisualChanged(_ visualSwitch: UISwitch) {
-        dataStore.playClickierSound()
-        
-        if visualSwitch.isOn{
-            defaults.set(SoundTypes.yes, forKey: "\(SoundTypes.soundVisualOn)")
-        } else {
-            defaults.set(SoundTypes.no, forKey: "\(SoundTypes.soundVisualOn)")
-        }
+//        dataStore.playClickierSound()
+//
+//        if visualSwitch.isOn {
+//            defaults.set(SoundTypes.yes, forKey: "\(SoundTypes.soundVisualOn)")
+//        } else {
+//            defaults.set(SoundTypes.no, forKey: "\(SoundTypes.soundVisualOn)")
+//        }
     }
     
     // MARK: - Navigation
@@ -99,6 +92,5 @@ class GameSettingsViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -406,7 +406,7 @@
                                         <color key="onTintColor" systemColor="secondaryLabelColor"/>
                                         <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <action selector="soundSwitchChanged:" destination="9Qf-3t-aeu" eventType="valueChanged" id="TJG-Qb-R5p"/>
+                                            <action selector="useMusicSwitchChanged:" destination="9Qf-3t-aeu" eventType="valueChanged" id="TJG-Qb-R5p"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Music" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mL-Xc-hYZ">
@@ -455,11 +455,11 @@
                                                 <color key="onTintColor" systemColor="secondaryLabelColor"/>
                                                 <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
-                                                    <action selector="buttonSoundChanged:" destination="9Qf-3t-aeu" eventType="valueChanged" id="eGQ-EK-LLW"/>
+                                                    <action selector="useSoundEffectsChanged:" destination="9Qf-3t-aeu" eventType="valueChanged" id="eGQ-EK-LLW"/>
                                                 </connections>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Button Clicks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EC-OT-EsC">
-                                                <rect key="frame" x="167.99999999999997" y="15" width="101" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound Effects" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EC-OT-EsC">
+                                                <rect key="frame" x="167.99999999999997" y="15" width="107" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -502,9 +502,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="buttonSwitch" destination="gZ9-cu-CoD" id="3GQ-Jr-YVS"/>
+                        <outlet property="musicSwitch" destination="KlX-gj-dYf" id="g89-lm-GIj"/>
                         <outlet property="save" destination="q9B-In-24V" id="Lla-P9-Ywd"/>
-                        <outlet property="soundSwitch" destination="KlX-gj-dYf" id="g89-lm-GIj"/>
+                        <outlet property="soundEffectSwitch" destination="gZ9-cu-CoD" id="3GQ-Jr-YVS"/>
                         <outlet property="soundVisualSwitch" destination="ceZ-2c-Tnl" id="iEn-OK-rEX"/>
                     </connections>
                 </viewController>
@@ -612,7 +612,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="gWb-Su-8ie"/>
-        <segue reference="51F-Nw-TI3"/>
+        <segue reference="b5J-mP-ozW"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>

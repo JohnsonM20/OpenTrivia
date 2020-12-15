@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        let defaults = UserDefaults.standard
+        
+        if !defaults.bool(forKey: SoundTypes.didSetInitialValues) {
+            defaults.set(true, forKey: SoundTypes.isMusicPlaying)
+            defaults.set(true, forKey: SoundTypes.useSoundEffects)
+        }
+
+        defaults.set(true, forKey: SoundTypes.didSetInitialValues)
+        
         /*
         if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             if shortcutItem.type == "Matthew-Johnson.OpenTrivia.FreePlay.FreePlay" {

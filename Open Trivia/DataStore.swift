@@ -31,64 +31,56 @@ class DataStore{
     }
     
     func playTinkSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let systemSoundID: SystemSoundID = 1057
             AudioServicesPlaySystemSound (systemSoundID)
         }
     }
     
     func playClickSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let systemSoundID: SystemSoundID = 1104
             AudioServicesPlaySystemSound (systemSoundID)
         }
     }
     
     func playClickierSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let systemSoundID: SystemSoundID = 1105
             AudioServicesPlaySystemSound (systemSoundID)
         }
     }
     
     func playDoubleWrongBeepSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let systemSoundID: SystemSoundID = 1255
             AudioServicesPlaySystemSound (systemSoundID)
         }
     }
     
     func playRandomSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let systemSoundID: SystemSoundID = 1306
             AudioServicesPlaySystemSound (systemSoundID)
         }
     }
     
     func playCorrectSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "correct", ofType: "wav")!)
             audioPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
             audioPlayer.numberOfLoops = 0
             audioPlayer.play()
         }
-
-        //if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.no{
-
-        //}
     }
     
     func playIncorrectSound(){
-        if defaults.bool(forKey: "\(SoundTypes.buttonOn)") {
+        if defaults.bool(forKey: SoundTypes.useSoundEffects) {
             let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "wrong", ofType: "wav")!)
             audioPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
             audioPlayer.numberOfLoops = 0
             audioPlayer.play()
         }
-
-        //if defaults.integer(forKey: "\(SoundTypes.soundOn)") == SoundTypes.no{
-
-        //}
     }
     
     func resetData(){
@@ -184,11 +176,11 @@ struct QuestionTypes {
 struct SoundTypes {
     static let allLightMusic: [String] = ["Happy Whistling Ukulele", "Horns", "Wakka Wakka"]
     static let allFastMusic: [String] = ["Goodnightmare"]
-    static let soundOn = "true"
-    static let buttonOn = "true"
-    static let soundVisualOn = "true"
-    static let no = 0
-    static let yes = 1
+
+    static let isMusicPlaying = "isMusicPlaying"
+    static let useSoundEffects = "useSoundEffects"
+    
+    static let didSetInitialValues = "didSetInitialValues"
 }
 
 struct ResponseCodes {
